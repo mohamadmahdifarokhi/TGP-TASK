@@ -1,0 +1,12 @@
+# .handover-exclude
+#
+# Paths listed here are EVALUATOR-ONLY and MUST NOT be included in the repository
+# copy handed to a candidate. They contain the grading rubric internals and the
+# seeded-bug answer key. See HANDOVER.md for the exact removal/withholding procedure.
+#
+# This file is intentionally NOT a .gitignore: the evaluator's own repo keeps these
+# files tracked. This list drives the pre-handover exclusion step instead.
+#
+# Format: one path (relative to repo root) per line. Lines starting with '#' are comments.
+
+evaluator/

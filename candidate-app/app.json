@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "JamJoys Candidate App",
+    "slug": "candidate-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": false,
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jamjoys.candidateapp"
+    },
+    "android": {
+      "package": "com.jamjoys.candidateapp"
+    },
+    "web": {
+      "bundler": "metro"
+    },
+    "extra": {
+      "apiBaseUrl": "process.env.EXPO_PUBLIC_API_BASE_URL"
+    }
+  }
+}
