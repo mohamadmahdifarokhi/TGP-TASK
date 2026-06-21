@@ -6,172 +6,188 @@
 <title>JamJoys Frontend Task — راهنمای داخلی ارزیاب</title>
 <style>
   :root {
-    --bg: #0f1419;
-    --card: #1a2129;
-    --card2: #222b35;
-    --ink: #e6edf3;
-    --muted: #9aa7b4;
+    --bg: #0e1116;
+    --bg2: #0b0e12;
+    --card: #171d26;
+    --card2: #20283340;
+    --chip: #222b35;
+    --ink: #e8eef5;
+    --muted: #97a3b2;
     --accent: #4ea1ff;
+    --accent2: #7c5cff;
     --green: #3fb950;
     --amber: #d29922;
     --red: #f85149;
-    --border: #2d3742;
+    --border: #2a3340;
+    --radius: 14px;
   }
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
     margin: 0;
     font-family: "Vazirmatn", "Segoe UI", Tahoma, sans-serif;
-    background: var(--bg);
+    background: radial-gradient(1200px 600px at 80% -10%, #16213400, #0e1116), var(--bg);
     color: var(--ink);
-    line-height: 1.8;
+    line-height: 1.85;
   }
-  .wrap { max-width: 1000px; margin: 0 auto; padding: 32px 20px 80px; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 32px 20px 90px; }
+
+  /* hero */
   header.hero {
-    background: linear-gradient(135deg, #15324f, #1a2129);
+    background:
+      radial-gradient(600px 240px at 90% -40%, rgba(124,92,255,0.25), transparent),
+      linear-gradient(135deg, #163252, #141b24);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px 28px 24px;
-    margin-bottom: 28px;
+    border-radius: 20px;
+    padding: 30px 30px 26px;
+    margin-bottom: 22px;
+    position: relative;
+    overflow: hidden;
   }
-  header.hero h1 { margin: 0 0 6px; font-size: 26px; }
-  header.hero p { margin: 0; color: var(--muted); }
+  header.hero h1 { margin: 6px 0 8px; font-size: 28px; letter-spacing: -0.3px; }
+  header.hero p.sub { margin: 0; color: #c7d2de; font-size: 15px; max-width: 70ch; }
   .badge {
-    display: inline-block;
-    background: var(--red);
-    color: #fff;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 999px;
-    margin-bottom: 12px;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(248,81,73,0.15);
+    color: #ff9b95;
+    border: 1px solid rgba(248,81,73,0.4);
+    font-size: 12px; font-weight: 700;
+    padding: 4px 11px; border-radius: 999px;
   }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .hero-meta .m {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 8px 14px; font-size: 13px;
+  }
+  .hero-meta .m b { color: var(--accent); font-size: 15px; }
+
+  /* TL;DR strip */
+  .tldr {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+    gap: 12px; margin-bottom: 22px;
+  }
+  .tldr .t {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 16px;
+  }
+  .tldr .t .k { font-size: 12px; color: var(--muted); }
+  .tldr .t .v { font-size: 18px; font-weight: 800; margin-top: 2px; }
+  .tldr .t .v.accent { color: var(--accent); }
+
+  /* toc */
+  .toc { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 22px; }
+  .toc a {
+    color: #c7d2de; text-decoration: none; background: var(--card);
+    padding: 7px 13px; border-radius: 9px; font-size: 13px;
+    border: 1px solid var(--border); transition: all .15s;
+  }
+  .toc a:hover { background: #1d2735; color: var(--accent); border-color: var(--accent); }
+
   section {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 22px 24px;
-    margin-bottom: 22px;
+    border-radius: var(--radius);
+    padding: 24px 26px;
+    margin-bottom: 20px;
+    scroll-margin-top: 16px;
   }
   h2 {
-    margin: 0 0 14px;
-    font-size: 20px;
-    border-right: 4px solid var(--accent);
-    padding-right: 12px;
+    margin: 0 0 16px; font-size: 21px;
+    display: flex; align-items: center; gap: 10px;
   }
-  h3 { font-size: 16px; margin: 18px 0 8px; color: var(--accent); }
+  h2 .n {
+    flex: none; width: 30px; height: 30px; border-radius: 9px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #06121f; font-size: 15px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+  }
+  h3 { font-size: 16px; margin: 20px 0 8px; color: var(--accent); }
   p, li { font-size: 15px; }
   ul, ol { padding-right: 22px; margin: 8px 0; }
   li { margin-bottom: 6px; }
   code {
-    background: var(--card2);
-    padding: 2px 7px;
-    border-radius: 6px;
-    font-family: "JetBrains Mono", Consolas, monospace;
-    font-size: 13px;
-    direction: ltr;
-    display: inline-block;
+    background: var(--chip); padding: 2px 7px; border-radius: 6px;
+    font-family: "JetBrains Mono", Consolas, monospace; font-size: 13px;
+    direction: ltr; display: inline-block;
   }
   pre {
-    background: #0b1016;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px 16px;
-    overflow-x: auto;
-    direction: ltr;
-    text-align: left;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px; overflow-x: auto;
+    direction: ltr; text-align: left;
   }
   pre code { background: none; padding: 0; font-size: 13px; }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 12px 0;
-    font-size: 14px;
-  }
-  th, td {
-    border: 1px solid var(--border);
-    padding: 9px 12px;
-    text-align: right;
-  }
-  th { background: var(--card2); font-weight: 700; }
-  td.num, th.num { text-align: center; width: 80px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  th, td { border: 1px solid var(--border); padding: 10px 12px; text-align: right; vertical-align: top; }
+  th { background: var(--chip); font-weight: 700; }
+  td.num, th.num { text-align: center; width: 78px; }
   tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
-  .pill { font-size: 12px; padding: 2px 9px; border-radius: 999px; font-weight: 600; }
+  .total-row td { font-weight: 800; background: rgba(78,161,255,0.12) !important; }
+
+  /* score bars */
+  .bar-wrap { display: flex; align-items: center; gap: 8px; }
+  .bar { flex: 1; height: 8px; background: var(--chip); border-radius: 999px; overflow: hidden; }
+  .bar > span { display: block; height: 100%; border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+  .bar.sm > span { background: var(--muted); }
+
+  .pill { font-size: 12px; padding: 2px 9px; border-radius: 999px; font-weight: 600; white-space: nowrap; }
   .pill.auth { background: #2d2438; color: #c9a9ff; }
   .pill.api { background: #14322b; color: #6ee7c0; }
   .pill.state { background: #33291a; color: #ffce85; }
   .pill.ui { background: #1f2f44; color: #8cc0ff; }
-  .steps { counter-reset: step; list-style: none; padding: 0; }
+
+  .steps { counter-reset: step; list-style: none; padding: 0; margin: 0; }
   .steps li {
-    position: relative;
-    padding: 12px 56px 12px 16px;
-    background: var(--card2);
-    border-radius: 10px;
-    margin-bottom: 10px;
+    position: relative; padding: 13px 56px 13px 16px;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 11px; margin-bottom: 10px;
   }
   .steps li::before {
-    counter-increment: step;
-    content: counter(step);
-    position: absolute;
-    right: 14px; top: 12px;
+    counter-increment: step; content: counter(step);
+    position: absolute; right: 13px; top: 12px;
     width: 28px; height: 28px;
-    background: var(--accent);
-    color: #06121f;
-    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #06121f; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-weight: 800;
-    font-size: 14px;
+    font-weight: 800; font-size: 14px;
   }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 14px;
-    margin-top: 8px;
-  }
-  .tile {
-    background: var(--card2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-  }
-  .tile h4 { margin: 0 0 6px; font-size: 15px; color: var(--accent); }
-  .tile .pts { font-size: 22px; font-weight: 800; }
-  .note {
-    border-right: 4px solid var(--amber);
-    background: rgba(210,153,34,0.08);
-    padding: 12px 16px;
-    border-radius: 8px;
-    margin: 14px 0;
-  }
-  .danger {
-    border-right: 4px solid var(--red);
-    background: rgba(248,81,73,0.08);
-    padding: 12px 16px;
-    border-radius: 8px;
-    margin: 14px 0;
-  }
-  .total-row td { font-weight: 800; background: rgba(78,161,255,0.12) !important; }
-  .toc { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-  .toc a {
-    color: var(--accent);
-    text-decoration: none;
-    background: var(--card2);
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-size: 13px;
-    border: 1px solid var(--border);
-  }
-  .toc a:hover { background: #2a3845; }
-  footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 30px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 10px; }
+  .tile { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+  .tile h4 { margin: 0 0 6px; font-size: 14px; color: var(--accent); }
+  .tile .pts { font-size: 24px; font-weight: 800; }
+
+  .note { border-right: 4px solid var(--amber); background: rgba(210,153,34,0.08); padding: 12px 16px; border-radius: 8px; margin: 14px 0; }
+  .danger { border-right: 4px solid var(--red); background: rgba(248,81,73,0.09); padding: 12px 16px; border-radius: 8px; margin: 14px 0; }
+  .good { border-right: 4px solid var(--green); background: rgba(63,185,80,0.08); padding: 12px 16px; border-radius: 8px; margin: 14px 0; }
+
+  footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 32px; }
+  .tag { display:inline-block; background: var(--chip); border:1px solid var(--border); border-radius:7px; padding:1px 8px; font-size:12px; color:var(--muted); margin-inline-start:6px; }
 </style>
 </head>
 <body>
 <div class="wrap">
 
   <header class="hero">
-    <span class="badge">محرمانه — فقط ارزیاب • به کاندیدا داده نشود</span>
+    <span class="badge">🔒 محرمانه — فقط ارزیاب • به کاندیدا داده نشود</span>
     <h1>تسک فرانت‌اند JamJoys — راهنمای داخلی پروسه</h1>
-    <p>یک نمای کلی از این‌که چه چیزی به فرانت می‌دهیم، انتظار چه کاری داریم، و چطور نمره می‌دهیم.</p>
+    <p class="sub">این سند می‌گوید چه چیزی به کاندیدا می‌دهیم، دقیقاً چه انتظاری از فرانت داریم، و چطور نمره می‌دهیم. تسک <strong>UI/UX-first</strong> است: اپ از قبل کار می‌کند ولی عمداً بدون استایل تحویل می‌شود و کار اصلی، بازطراحی کل ظاهر است.</p>
+    <div class="hero-meta">
+      <div class="m">⏱ زمان: <b>۲ روز (~۱۶ ساعت)</b></div>
+      <div class="m">🎯 وزن UI/UX: <b>~۶۰٪</b></div>
+      <div class="m">🧩 باگ‌ها: <b>۶ عدد (۵ امتیاز)</b></div>
+      <div class="m">📦 بک‌اند: <b>mock بدون‌وابستگی</b></div>
+    </div>
   </header>
+
+  <div class="tldr">
+    <div class="t"><div class="k">ماهیت تسک</div><div class="v accent">UI/UX-first</div></div>
+    <div class="t"><div class="k">سنگین‌ترین دسته</div><div class="v">طراحی بصری · ۳۵</div></div>
+    <div class="t"><div class="k">قانون طلایی</div><div class="v">«کار می‌کند ولی زشت» = نمرهٔ کم</div></div>
+    <div class="t"><div class="k">قضاوت اصلی</div><div class="v">در اپِ در حال اجرا</div></div>
+  </div>
 
   <div class="toc">
     <a href="#what">۱. چی می‌دیم</a>
@@ -184,69 +200,75 @@
   </div>
 
   <section id="what">
-    <h2>۱. چه چیزی به کاندیدا می‌دهیم؟</h2>
-    <p>کاندیدا یک پکیج (zip / ریپوی public) دریافت می‌کند که شامل پروژهٔ استارتر و مستندات تسک است. پوشهٔ <code>evaluator/</code> هرگز تحویل داده نمی‌شود.</p>
+    <h2><span class="n">۱</span> چه چیزی به کاندیدا می‌دهیم؟</h2>
+    <p>کاندیدا یک پکیج (zip که خودش روی یک ریپوی public می‌گذارد) دریافت می‌کند شامل اپ استارتر، بک‌اند mock، و مستندات. پوشهٔ <code>evaluator/</code> هرگز تحویل داده نمی‌شود.</p>
     <table>
       <thead><tr><th>فایل / پوشه</th><th>توضیح</th></tr></thead>
       <tbody>
-        <tr><td><code>candidate-app/</code></td><td>اپ React Native (Expo) که سرتاسر کار می‌کند ولی ۶ باگ عمدی دارد.</td></tr>
-        <tr><td><code>mock-backend/</code></td><td>بک‌اند mock بدون‌وابستگی (Node خالص) — همهٔ endpointها و دیتای seed برای اجرای لوکال.</td></tr>
-        <tr><td><code>ASSIGNMENT.md</code></td><td>شرح کامل تسک، بخش feature «Discover»، استک پیشنهادی، حقایق بک‌اند، Git workflow و مراحل تحویل.</td></tr>
+        <tr><td><code>candidate-app/</code></td><td>اپ React Native (Expo) که سرتاسر کار می‌کند ولی <strong>عمداً بدون استایل</strong> است و ۶ باگ عمدی دارد.</td></tr>
+        <tr><td><code>mock-backend/</code></td><td>بک‌اند mock بدون‌وابستگی (Node خالص) — همهٔ endpointها و دیتای seed برای اجرای لوکال بدون دیتابیس.</td></tr>
+        <tr><td><code>ASSIGNMENT.md</code></td><td>شرح کامل تسک: بازطراحی UI/UX همهٔ صفحه‌ها، design system، صفحهٔ Discover، حقایق بک‌اند، Git workflow و مراحل تحویل.</td></tr>
         <tr><td><code>BUGS.md</code></td><td>فقط <strong>علائم</strong> ۶ باگ (بدون ریشه و راه‌حل).</td></tr>
-        <tr><td><code>README.md</code></td><td>قالب خالی برای کاندیدا تا پر کند (نحوهٔ اجرا، env، ساختار، نگاشت صفحه↔endpoint).</td></tr>
+        <tr><td><code>README.md</code></td><td>قالب خالی برای کاندیدا (اجرا، env، ساختار، نگاشت صفحه↔endpoint، و بخش design system + اسکرین‌شات).</td></tr>
         <tr><td><code>AI_USAGE.md</code></td><td>قالب مستندسازی استفاده از ابزار AI.</td></tr>
         <tr><td><code>BUGFIX_NOTES.md</code></td><td>قالب ثبت ریشه و راه‌حل هر باگ + تفکیک AI/دستی.</td></tr>
       </tbody>
     </table>
-    <div class="note">بک‌اند به‌صورت یک <strong>mock بدون‌وابستگی</strong> داخل <code>mock-backend/</code> همراه پکیج داده می‌شود (فقط <code>node server.js</code>). قراردادش ثابت است و کاندیدا تغییرش نمی‌دهد — فقط کلاینت را به آن وصل می‌کند. OTP در پاسخ برمی‌گردد، پس کل فلو بدون SMS و بدون دیتابیس قابل تست است.</div>
+    <div class="note">بک‌اند فقط با <code>node server.js</code> بالا می‌آید (نیاز به npm install/دیتابیس ندارد). OTP در پاسخ برمی‌گردد، پس کل فلو auth بدون SMS قابل تست است. قرارداد بک‌اند ثابت است و کاندیدا تغییرش نمی‌دهد.</div>
   </section>
 
   <section id="expect">
-    <h2>۲. انتظار چه کاری داریم؟</h2>
+    <h2><span class="n">۲</span> انتظار چه کاری داریم؟</h2>
     <p>تسک برای تقریباً <strong>دو روز (~۱۶ ساعت)</strong> طراحی شده. کاندیدا باید:</p>
     <ul>
-      <li>اپ را روی بک‌اند (mock همراه پکیج) اجرا کند و باگ‌ها را رفع کند تا اپ کامل کار کند.</li>
-      <li><strong>UI/UX همهٔ صفحه‌های موجود را از پایه بازطراحی و بهتر کند</strong> — این بخش اصلی و سنگین‌ترین وزن نمره است. اپ استارتر عمداً بدون استایل تحویل شده.</li>
+      <li>باگ‌ها را زود رفع کند تا اپ کامل و قابل‌استفاده شود.</li>
+      <li><strong>UI/UX همهٔ صفحه‌های موجود را از پایه بازطراحی و بهتر کند</strong> — بخش اصلی و سنگین‌ترین وزن نمره.</li>
       <li>یک <strong>design system</strong> خودش بسازد (tokens + کامپوننت‌های reusable).</li>
-      <li>یک صفحهٔ Discover جدید به‌عنوان landing بسازد (featured rail، continue-watching، دسته‌بندی، جستجو).</li>
-      <li>هر ۶ باگ کاشته‌شده را پیدا و رفع کند و در <code>BUGFIX_NOTES.md</code> مستند کند (وزن کم).</li>
+      <li>صفحهٔ <strong>Discover</strong> را به‌عنوان landing بسازد (featured rail، continue-watching، دسته‌بندی، جستجو).</li>
+      <li>حالت‌های loading / error / empty <strong>طراحی‌شده</strong> در همهٔ صفحات داشته باشد.</li>
       <li>در صورت تمایل ساختار/معماری پروژه را هم بهتر کند (پاداش دارد).</li>
-      <li>حالت‌های loading / error / empty طراحی‌شده در همهٔ صفحات داشته باشد.</li>
-      <li>کد را روی یک ریپوی <strong>public</strong> با تاریخچهٔ کامل git پوش کند و لینکش را بدهد.</li>
-      <li>سه مستند <code>README.md</code> (با <strong>اسکرین‌شات همهٔ صفحه‌ها</strong>)، <code>AI_USAGE.md</code>، <code>BUGFIX_NOTES.md</code> را پر کند.</li>
+      <li>کد را روی یک ریپوی <strong>public</strong> با تاریخچهٔ کامل git پوش کند و لینک بدهد.</li>
+      <li>سه مستند را پر کند: <code>README.md</code> (با <strong>اسکرین‌شات همهٔ صفحه‌ها</strong>)، <code>AI_USAGE.md</code>، <code>BUGFIX_NOTES.md</code>.</li>
     </ul>
-    <div class="note">جمع‌بندی: این تسک <strong>UI/UX-first</strong> است. اپ از قبل کار می‌کند ولی زشت است؛ کار اصلی فرانت، بازطراحی و صیقل کل اپ است. اپِ «کار می‌کند ولی زشت» باید نمرهٔ پایین بگیرد.</div>
+    <div class="danger"><strong>قانون طلایی:</strong> این تسک UI/UX-first است. اپِ «کار می‌کند ولی زشت» باید نمرهٔ پایین بگیرد — کارِ حداقلی (فقط فیکس باگ) نباید نمرهٔ بالا بگیرد.</div>
   </section>
 
   <section id="frontend">
-    <h2>۳. از فرانت دقیقاً چی می‌خوایم؟</h2>
-    <p>اپ استارتر همهٔ صفحات و لایهٔ داده را از قبل دارد و کار می‌کند، ولی <strong>عمداً بدون استایل</strong> است (ویوهای خام React Native). این صفحه‌ها <strong>بِیس</strong> هستند؛ تعریف می‌کنند اپ چه‌کار می‌کند، نه این‌که چقدر خوب به‌نظر می‌رسد. کار اصلی فرانت اینه که اینها را به یک محصول واقعی و صیقلی تبدیل کند.</p>
+    <h2><span class="n">۳</span> از فرانت دقیقاً چی می‌خوایم؟</h2>
+    <p>اپ استارتر همهٔ صفحات و لایهٔ داده را دارد و کار می‌کند، ولی با ویوهای خام React Native و بدون طراحی. این صفحه‌ها <strong>بِیس</strong> هستند — تعریف می‌کنند اپ چه‌کار می‌کند، نه اینکه چقدر خوب دیده می‌شود. کار فرانت، تبدیل این بِیس به یک محصول واقعی است.</p>
 
-    <h3>الف) بازطراحی UI/UX همهٔ صفحه‌ها (بخش اصلی — ~۶۰ امتیاز)</h3>
-    <p>همهٔ این صفحه‌ها باید از حالت خام به طراحی production تبدیل شوند: Phone، OTP، Catalog، Game Detail، Video Player، Favorites، Wishlist، Watch History، Profile، و Discover.</p>
+    <h3>الف) بازطراحی UI/UX همهٔ صفحه‌ها <span class="tag">بخش اصلی · ~۶۰ امتیاز</span></h3>
+    <p>این ۱۰ صفحه باید از حالت خام به طراحی production برسند:</p>
+    <p>
+      <span class="pill ui">Phone</span> <span class="pill ui">OTP</span>
+      <span class="pill ui">Catalog</span> <span class="pill ui">Game&nbsp;Detail</span>
+      <span class="pill ui">Video&nbsp;Player</span> <span class="pill ui">Favorites</span>
+      <span class="pill ui">Wishlist</span> <span class="pill ui">Watch&nbsp;History</span>
+      <span class="pill ui">Profile</span> <span class="pill ui">Discover</span>
+    </p>
     <ul>
-      <li><strong>طراحی بصری در همهٔ صفحه‌ها (۳۵):</strong> layout، ریتم spacing، مقیاس تایپوگرافی، رنگ/کنتراست، سلسله‌مراتب، آیکن، و انسجام بصری بین همهٔ صفحه‌ها. RTL فارسی درست.</li>
-      <li><strong>Design system و کامپوننت‌های reusable (۱۵):</strong> tokens متمرکز (رنگ/spacing/تایپو/شعاع/سایه) + کتابخانهٔ کوچک کامپوننت (Button، Card، Input، Badge، …). بدون magic number پراکنده یا کپی‌پیست استایل.</li>
+      <li><strong>طراحی بصری (۳۵):</strong> layout، ریتم spacing، مقیاس تایپوگرافی، رنگ/کنتراست، سلسله‌مراتب، آیکن، و انسجام بصری بین همهٔ صفحه‌ها. RTL فارسی درست.</li>
+      <li><strong>Design system (۱۵):</strong> tokens متمرکز (رنگ/spacing/تایپو/شعاع/سایه) + کتابخانهٔ کوچک کامپوننت (Button، Card، Input، Badge، …). بدون magic number پراکنده یا کپی‌پیست استایل.</li>
       <li><strong>States و interaction/motion (۱۰):</strong> loading/error/empty طراحی‌شده (skeleton/shimmer)، حالت pressed/disabled، keyboard avoidance، pull-to-refresh، optimistic UI.</li>
     </ul>
 
-    <h3>ب) صفحهٔ Discover جدید (۱۵)</h3>
-    <p>یک landing جدید: featured rail (<code>GET /games/featured</code>)، continue-watching (<code>GET /watch-history</code>، خالی شد مخفی)، دسته‌بندی از <code>GET /games</code> با <code>categoryConfig</code>، و جستجوی debounce‌شده. تب اولیهٔ authenticated باشد و از API client و state مشترک استفاده کند.</p>
+    <h3>ب) صفحهٔ Discover جدید <span class="tag">۱۵ امتیاز</span></h3>
+    <p>یک landing جدید: featured rail (<code>GET /games/featured</code>)، continue-watching (<code>GET /watch-history</code> — خالی شد مخفی)، دسته‌بندی از <code>GET /games</code> با <code>categoryConfig</code>، و جستجوی debounce‌شده. تب اولیهٔ authenticated باشد و از API client و state مشترک استفاده کند.</p>
 
-    <h3>ج) موارد ثانویه (وزن کم)</h3>
+    <h3>ج) موارد ثانویه <span class="tag">وزن کم</span></h3>
     <ul>
-      <li><strong>رفع ۶ باگ (۵):</strong> برای این‌که اپ واقعاً کار کند؛ مستند در <code>BUGFIX_NOTES.md</code>.</li>
-      <li><strong>معماری و ساختار (۵):</strong> حفظ لایه‌بندی و typecheck تمیز. <strong>اگر ساختار/فولدربندی را بهتر کند (مثلاً feature-based) و توجیه کند، پاداش می‌گیرد</strong> — می‌خواهیم ببینیم کی ساختار بهتری انتخاب می‌کند.</li>
-      <li>Git workflow، AI usage، و README با <strong>اسکرین‌شات همهٔ صفحه‌ها</strong> (هر کدام ۵).</li>
+      <li><strong>رفع ۶ باگ (۵):</strong> برای اینکه اپ واقعاً کار کند؛ مستند در <code>BUGFIX_NOTES.md</code> با کامیت‌های <code>fix:</code> مجزا.</li>
+      <li><strong>معماری، صحت و performance (۵):</strong> حفظ لایه‌بندی و typecheck تمیز + بهینگی کل اپ (لیست‌های virtualized، memoization، بدون re-render اضافی، بدون fetch تکراری). اگر ساختار/فولدربندی را بهتر کند (مثلاً feature-based) و توجیه کند، <strong>پاداش می‌گیرد</strong> — می‌خواهیم ببینیم کی ساختار بهتری انتخاب می‌کند.</li>
+      <li>Git workflow · AI usage · README با اسکرین‌شات (هر کدام ۵).</li>
     </ul>
 
-    <div class="danger"><strong>قانون gating:</strong> اگر اپ هنوز شبیه استارترِ بدون‌استایل باشد، دسته‌های ۱ تا ۴ نمی‌توانند از ~۳۰٪ بالاتر بروند — هرچقدر هم کد تمیز باشد. هدف این تسک، صنعتگریِ فرانت است.</div>
-    <div class="note">داده‌های mock غنی است (۸ بازی، ۴ دسته، ۴ featured، تاریخچهٔ seed‌شده). کاندیدا می‌تواند کتابخانهٔ UI/آیکن/انیمیشن اضافه کند اگر در README توجیه کند، ولی طراحی (layout و زبان بصری) باید کار خودش باشد.</div>
+    <div class="danger"><strong>قانون gating:</strong> اگر اپ هنوز شبیه استارترِ بدون‌استایل باشد، دسته‌های ۱ تا ۴ نمی‌توانند از ~۳۰٪ بالاتر بروند — هرچقدر هم کد تمیز باشد.</div>
+    <div class="note">دیتای mock غنی است (۸ بازی، ۴ دسته، ۴ featured، تاریخچهٔ seed‌شده) تا صفحه‌ها پر و قابل‌قضاوت باشند. کاندیدا می‌تواند کتابخانهٔ UI/آیکن/انیمیشن اضافه کند اگر در README توجیه کند، ولی زبان بصری و layout باید کار خودش باشد.</div>
   </section>
 
   <section id="bugs">
-    <h2>۴. باگ‌های کاشته‌شده (کلید پاسخ — محرمانه)</h2>
-    <p>۶ باگ در حوزه‌های auth، API، state و UI پخش شده‌اند. هر باگ به یک property test متصل است که با رفع باگ سبز می‌شود.</p>
+    <h2><span class="n">۴</span> باگ‌های کاشته‌شده <span class="tag">کلید پاسخ — محرمانه</span></h2>
+    <p>۶ باگ در حوزه‌های auth، API، state و UI پخش شده‌اند. این‌ها صرفاً برای این هستند که اپ درست کار کند تا کاندیدا بتواند رویش UI بسازد؛ وزن نمره‌شان کم است (۵).</p>
     <table>
       <thead><tr><th>باگ</th><th>حوزه</th><th>علامت</th><th>ریشه (خلاصه)</th></tr></thead>
       <tbody>
@@ -292,70 +314,66 @@
   </section>
 
   <section id="scoring">
-    <h2>۵. چطور نمره می‌دهیم؟ (۱۰۰ امتیاز)</h2>
-    <p>هر دسته مستقل و بر اساس <strong>رفتار قابل‌مشاهده</strong> نمره می‌گیرد. سه باند: امتیاز کامل / جزئی / صفر.</p>
+    <h2><span class="n">۵</span> چطور نمره می‌دهیم؟ <span class="tag">۱۰۰ امتیاز</span></h2>
+    <p>هر دسته مستقل و بر اساس <strong>چیزی که در اپ دیده می‌شود</strong> نمره می‌گیرد. وزن‌ها به‌صورت بصری:</p>
     <table>
-      <thead><tr><th class="num">#</th><th>دسته</th><th class="num">امتیاز</th></tr></thead>
+      <thead><tr><th class="num">#</th><th>دسته</th><th class="num">امتیاز</th><th>وزن</th></tr></thead>
       <tbody>
-        <tr><td class="num">۱</td><td>طراحی بصری UI/UX در همهٔ صفحه‌ها</td><td class="num">۳۵</td></tr>
-        <tr><td class="num">۲</td><td>Design system و کیفیت کامپوننت reusable</td><td class="num">۱۵</td></tr>
-        <tr><td class="num">۳</td><td>صفحهٔ Discover (UI + ترکیب داده)</td><td class="num">۱۵</td></tr>
-        <tr><td class="num">۴</td><td>States و صیقل interaction/motion</td><td class="num">۱۰</td></tr>
-        <tr><td class="num">۵</td><td>رفع باگ‌های کاشته‌شده</td><td class="num">۵</td></tr>
-        <tr><td class="num">۶</td><td>معماری و صحت (API client، state، ساختار، typecheck)</td><td class="num">۵</td></tr>
-        <tr><td class="num">۷</td><td>Git workflow</td><td class="num">۵</td></tr>
-        <tr><td class="num">۸</td><td>مستندسازی استفاده از AI</td><td class="num">۵</td></tr>
-        <tr><td class="num">۹</td><td>کیفیت README و اسکرین‌شات‌ها</td><td class="num">۵</td></tr>
-        <tr class="total-row"><td class="num">—</td><td>مجموع</td><td class="num">۱۰۰</td></tr>
+        <tr><td class="num">۱</td><td>طراحی بصری UI/UX در همهٔ صفحه‌ها</td><td class="num">۳۵</td><td><div class="bar"><span style="width:100%"></span></div></td></tr>
+        <tr><td class="num">۲</td><td>Design system و کیفیت کامپوننت reusable</td><td class="num">۱۵</td><td><div class="bar"><span style="width:43%"></span></div></td></tr>
+        <tr><td class="num">۳</td><td>صفحهٔ Discover (UI + ترکیب داده)</td><td class="num">۱۵</td><td><div class="bar"><span style="width:43%"></span></div></td></tr>
+        <tr><td class="num">۴</td><td>States و صیقل interaction/motion</td><td class="num">۱۰</td><td><div class="bar"><span style="width:29%"></span></div></td></tr>
+        <tr><td class="num">۵</td><td>رفع باگ‌های کاشته‌شده</td><td class="num">۵</td><td><div class="bar sm"><span style="width:14%"></span></div></td></tr>
+        <tr><td class="num">۶</td><td>معماری، صحت و performance (API client، state، ساختار، typecheck)</td><td class="num">۵</td><td><div class="bar sm"><span style="width:14%"></span></div></td></tr>
+        <tr><td class="num">۷</td><td>Git workflow</td><td class="num">۵</td><td><div class="bar sm"><span style="width:14%"></span></div></td></tr>
+        <tr><td class="num">۸</td><td>مستندسازی استفاده از AI</td><td class="num">۵</td><td><div class="bar sm"><span style="width:14%"></span></div></td></tr>
+        <tr><td class="num">۹</td><td>کیفیت README و اسکرین‌شات‌ها</td><td class="num">۵</td><td><div class="bar sm"><span style="width:14%"></span></div></td></tr>
+        <tr class="total-row"><td class="num">—</td><td>مجموع</td><td class="num">۱۰۰</td><td>—</td></tr>
       </tbody>
     </table>
 
-    <h3>نکات کلیدی نمره‌دهی</h3>
+    <div class="good"><strong>۶۰ امتیاز اول</strong> (دسته‌های ۱ تا ۳) کاملاً دربارهٔ کیفیت بصری و طراحی است. این قلب نمره است.</div>
+
+    <h3>نکات کلیدی</h3>
     <ul>
-      <li><strong>UI-first:</strong> ~۶۰ از ۱۰۰ امتیاز کیفیت بصری و تعاملی است. اپِ «کار می‌کند ولی زشت» باید نمرهٔ پایین بگیرد.</li>
+      <li><strong>UI-first:</strong> ~۶۰ از ۱۰۰ امتیاز کیفیت بصری/تعاملی است.</li>
       <li><strong>قانون gating:</strong> اگر اپ هنوز شبیه استارترِ بدون‌استایل باشد، دسته‌های ۱ تا ۴ از ~۳۰٪ بالاتر نمی‌روند.</li>
       <li><strong>چک‌اوت تمیز:</strong> روی یک clone تازه و طبق README خودِ کاندیدا نمره می‌دهیم؛ هیچ فایلی دستی اصلاح نمی‌کنیم.</li>
       <li><strong>مبتنی بر شواهد:</strong> برای هر کسر امتیاز، چیزی که در اپ دیده شده (صفحه، اسکرین‌شات، فایل/خط) ثبت می‌شود.</li>
       <li><strong>Stretch goals:</strong> جدا یادداشت می‌شوند و هرگز مجموع را بالای ۱۰۰ نمی‌برند.</li>
     </ul>
-
-    <div class="grid">
-      <div class="tile"><h4>سنگین‌ترین دسته</h4><div class="pts">۳۵</div><p>طراحی بصری UI/UX در همهٔ صفحه‌ها.</p></div>
-      <div class="tile"><h4>Design system</h4><div class="pts">۱۵</div><p>tokens + کامپوننت‌های reusable.</p></div>
-      <div class="tile"><h4>Discover</h4><div class="pts">۱۵</div><p>landing با featured/continue/category/search.</p></div>
-    </div>
   </section>
 
   <section id="process">
-    <h2>۶. پروسهٔ عملی گرفتن نمره</h2>
+    <h2><span class="n">۶</span> پروسهٔ عملی گرفتن نمره</h2>
     <ol class="steps">
-      <li>mock backend را بالا بیاور (<code>cd mock-backend && node server.js</code>) و مطمئن شو <code>POST /auth/send-otp</code> مقدار <code>otp</code> را برمی‌گرداند.</li>
-      <li>از سابمیشن کاندیدا یک clone تازه بگیر؛ دستور install مستندشده را اجرا کن (بدون اصلاح دستی).</li>
-      <li>اپ را روی بک‌اند اجرا کن و <code>typecheck</code> را بگیر.</li>
-      <li><strong>هر صفحه را در اپِ در حال اجرا نگاه کن</strong> و کیفیت بصری/تعاملی‌اش را با باندهای رابریک تطبیق بده — این بخش اصلی قضاوت است. اسکرین‌شات‌های README کمک می‌کنند ولی در اپ تأیید کن.</li>
-      <li>هر باگ را با <code>BUG_ANSWER_KEY.md</code> راستی‌آزمایی کن (آیا علامت رفع شده؟).</li>
-      <li>هر دسته را مستقل نمره بده و در <code>GRADING_WORKSHEET.md</code> با شواهد ثبت کن.</li>
-      <li>مجموع را از ۱۰۰ حساب کن؛ stretch goals را جداگانه یادداشت کن.</li>
+      <li>mock backend را بالا بیاور (<code>cd mock-backend &amp;&amp; node server.js</code>) و مطمئن شو <code>POST /auth/send-otp</code> مقدار <code>otp</code> را برمی‌گرداند.</li>
+      <li>از سابمیشن کاندیدا یک clone تازه بگیر؛ دستور install مستندشده را اجرا کن (بدون اصلاح دستی). اگر طبق README اجرا نشد، خودش یک سیگنال نمره است.</li>
+      <li>اپ را اجرا کن و <code>npm run typecheck</code> را بگیر.</li>
+      <li><strong>هر صفحه را در اپِ در حال اجرا نگاه کن</strong> و کیفیت بصری/تعاملی‌اش را با باندهای رابریک تطبیق بده — این مرحلهٔ اصلی قضاوت است. اسکرین‌شات‌های README کمک می‌کنند ولی در اپ تأیید کن.</li>
+      <li>هر باگ را با <code>BUG_ANSWER_KEY.md</code> راستی‌آزمایی کن (آیا علامت دیگر رخ نمی‌دهد؟).</li>
+      <li>صفحهٔ Discover و design system را جداگانه بررسی کن (انسجام tokens، reuse کامپوننت‌ها).</li>
+      <li>هر دسته را مستقل نمره بده و در <code>GRADING_WORKSHEET.md</code> با شواهد ثبت کن؛ مجموع از ۱۰۰.</li>
     </ol>
-    <div class="note">برای نمره‌دهی، نسخهٔ خصوصی <code>evaluator/</code> خودت را استفاده کن. سابمیشن کاندیدا هیچ فایل evaluator ندارد، پس چیزی برای merge برگشتی وجود ندارد.</div>
+    <div class="note">برای نمره‌دهی، نسخهٔ خصوصی <code>evaluator/</code> خودت را استفاده کن. سابمیشن کاندیدا هیچ فایل evaluator ندارد.</div>
   </section>
 
   <section id="handover">
-    <h2>۷. تحویل امن (یادآوری)</h2>
-    <p>قبل از فرستادن هر چیزی به کاندیدا، مطمئن شو پوشهٔ <code>evaluator/</code> داخلش نیست.</p>
+    <h2><span class="n">۷</span> تحویل امن <span class="tag">یادآوری</span></h2>
+    <p>قبل از فرستادن هر چیزی به کاندیدا، مطمئن شو پوشهٔ <code>evaluator/</code> داخلش نیست:</p>
     <pre><code># پوشه نباید در working tree باشد
-test ! -e evaluator/ && echo "OK: absent" || echo "FAIL: present"
+test ! -e evaluator/ &amp;&amp; echo "OK: absent" || echo "FAIL: present"
 
 # git نباید روی برنچ تحویل آن را track کند
-git ls-files | grep -q '^evaluator/' && echo "FAIL: tracked" || echo "OK"
+git ls-files | grep -q '^evaluator/' &amp;&amp; echo "FAIL: tracked" || echo "OK"
 
 # هیچ ارجاع به کلید پاسخ/رابریک نباشد
-grep -rli --include='*.md' 'BUG_ANSWER_KEY\|GRADING_WORKSHEET' . && echo "FAIL" || echo "OK"</code></pre>
+grep -rli --include='*.md' 'BUG_ANSWER_KEY\|GRADING_WORKSHEET' . &amp;&amp; echo "FAIL" || echo "OK"</code></pre>
     <p>جزئیات کامل در <code>HANDOVER.md</code> آمده (برنچ خصوصی <code>evaluator</code> یا حذف pre-handover روی یک کپی throwaway).</p>
   </section>
 
   <footer>
-    سند داخلی ارزیاب — JamJoys Frontend Task. این فایل را داخل <code>evaluator/</code> نگه دار و هرگز به کاندیدا نده.
+    سند داخلی ارزیاب — JamJoys Frontend Task · این فایل را داخل <code>evaluator/</code> نگه دار و هرگز به کاندیدا نده.
   </footer>
 
 </div>

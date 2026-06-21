@@ -19,7 +19,7 @@ Award each category against the observable full-credit / partial-credit / zero c
 | Discover screen (UI + data composition) | 15 |  |  |
 | States & interaction/motion polish | 10 |  |  |
 | Seeded-bug fixing | 5 |  |  |
-| Architecture & correctness | 5 |  |  |
+| Architecture, correctness & performance | 5 |  |  |
 | Git workflow | 5 |  |  |
 | AI-usage documentation | 5 |  |  |
 | README quality & screenshots | 5 |  |  |

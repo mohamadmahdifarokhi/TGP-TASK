@@ -62,7 +62,7 @@ weighted — a working-but-ugly app should score poorly.
 | 3 | Discover screen (UI + data composition) | 15 |
 | 4 | States & interaction/motion polish | 10 |
 | 5 | Seeded-bug fixing | 5 |
-| 6 | Architecture & correctness (API client, state, structure, typecheck) | 5 |
+| 6 | Architecture, correctness & performance (API client, state, structure, typecheck) | 5 |
 | 7 | Git workflow | 5 |
 | 8 | AI-usage documentation | 5 |
 | 9 | README quality & screenshots | 5 |
@@ -192,25 +192,33 @@ Secondary to the UI work, but the app must actually function.*
 
 ---
 
-## 6. Architecture & correctness — 5 points
+## 6. Architecture, correctness & performance — 5 points
 
-*The layered architecture, project structure, and that the data layer stays sound. Structural
-improvements are rewarded here.*
+*The layered architecture, project structure, that the data layer stays sound, and that the app
+is built with reasonable performance hygiene. Structural improvements are rewarded here.*
 
 **Full credit (5):**
 - Clean separation of concerns (UI → state → API client → backend); the centralized API client
   and shared store are reused — no second networking path, no hard-coded base URL.
 - TypeScript compiles with **no** errors via the `typecheck` script.
+- **Performance (app-wide, not just Discover):** all long/scrolling lists are virtualized
+  (`FlatList`/`SectionList`, not `.map()` inside a `ScrollView`) with stable `keyExtractor`s;
+  rows/cards are `React.memo`'d and render callbacks are `useCallback`/`useMemo`'d so there are
+  no obvious re-render storms; no heavy work in render; inputs/scroll handlers are
+  debounced/throttled where appropriate; no duplicate/redundant requests (e.g. refetch loops,
+  n+1 calls). `getItemLayout` / image sizing where it clearly helps is a plus.
 - **Structure bonus:** if the candidate reorganized the project into a clearer/more scalable
   structure (e.g. feature-based folders, an explicit design-system layer) and justified it,
   reward it here. A thoughtful, well-argued structure scores full marks; keeping the original
   layout cleanly is also acceptable.
 
 **Partial credit (1–4):**
-- ~4: sound architecture, structure kept tidy, typecheck clean.
-- ~3: minor leaks (a screen calls the backend directly, or some hard-coded values) or a few
-  type errors.
-- ~1: significant architectural leaks or many type errors.
+- ~4: sound architecture and typecheck clean, but a couple of performance smells (a non-
+  virtualized list, missing memoization on a hot list, or an inline object/function in a hot
+  prop) or minor structure issues.
+- ~3: minor architectural leaks (a screen calls the backend directly, or some hard-coded
+  values), a few type errors, or noticeable re-render/perf problems on a main screen.
+- ~1: significant architectural leaks or many type errors; lists not virtualized at all.
 
 **Zero (0):**
 - Architecture broken: ad-hoc fetches everywhere, hard-coded base URLs, or typecheck fails badly.
