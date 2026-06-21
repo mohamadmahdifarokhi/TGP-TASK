@@ -64,12 +64,22 @@ const GID = {
   haftSang: '11111111-1111-4111-8111-111111111111',
   alak: '22222222-2222-4222-8222-222222222222',
   golYaPooch: '33333333-3333-4333-8333-333333333333',
+  lakkoDori: '44444444-4444-4444-8444-444444444444',
+  gorgomBazi: '55555555-5555-4555-8555-555555555555',
+  yegholeDoghol: '66666666-6666-4666-8666-666666666666',
+  zooBaazi: '77777777-7777-4777-8777-777777777777',
+  tabBazi: '88888888-8888-4888-8888-888888888888',
 };
 const VID = {
   haftSangIntro: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1',
   haftSangPro: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2',
   alakIntro: 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb1',
   golIntro: 'cccccccc-cccc-4ccc-8ccc-ccccccccccc1',
+  lakkoIntro: 'dddddddd-dddd-4ddd-8ddd-ddddddddddd1',
+  gorgomIntro: 'eeeeeeee-eeee-4eee-8eee-eeeeeeeeeee1',
+  yegholIntro: 'ffffffff-ffff-4fff-8fff-fffffffffff1',
+  zooIntro: 'a1b2c3d4-0000-4000-8000-000000000001',
+  tabIntro: 'a1b2c3d4-0000-4000-8000-000000000002',
 };
 
 /** Videos keyed by id. `premium` videos require an active subscription. */
@@ -78,51 +88,86 @@ const videos = new Map([
   [VID.haftSangPro, { id: VID.haftSangPro, title: 'هفت‌سنگ — تکنیک‌های پیشرفته', description: 'برای بازیکنان حرفه‌ای', duration: 540, thumbnail: null, premium: true }],
   [VID.alakIntro, { id: VID.alakIntro, title: 'الک‌دولک — آموزش پایه', description: 'نحوهٔ ضربه و امتیازگیری', duration: 280, thumbnail: null, premium: false }],
   [VID.golIntro, { id: VID.golIntro, title: 'گل‌یا‌پوچ — آموزش', description: 'ترفندهای حدس زدن', duration: 210, thumbnail: null, premium: false }],
+  [VID.lakkoIntro, { id: VID.lakkoIntro, title: 'لک‌و‌دوری — آموزش', description: 'بازی محلی با چوب و حلقه', duration: 245, thumbnail: null, premium: false }],
+  [VID.gorgomIntro, { id: VID.gorgomIntro, title: 'گرگم‌به‌هوا — آموزش', description: 'بازی دونده و گریز', duration: 300, thumbnail: null, premium: false }],
+  [VID.yegholIntro, { id: VID.yegholIntro, title: 'یه‌قل‌دوقل — آموزش', description: 'بازی با پنج سنگ‌ریزه', duration: 260, thumbnail: null, premium: true }],
+  [VID.zooIntro, { id: VID.zooIntro, title: 'زو — آموزش', description: 'بازی نفس‌گیر گروهی', duration: 330, thumbnail: null, premium: false }],
+  [VID.tabIntro, { id: VID.tabIntro, title: 'تب‌بازی — آموزش', description: 'بازی تعادل و سرعت', duration: 200, thumbnail: null, premium: false }],
 ]);
+
+const CAT = {
+  group: { name: 'گروهی', label: 'بازی گروهی', color: '#4ea1ff' },
+  skill: { name: 'مهارتی', label: 'بازی مهارتی', color: '#3fb950' },
+  mind: { name: 'فکری', label: 'بازی فکری', color: '#d29922' },
+  active: { name: 'تحرکی', label: 'بازی تحرکی', color: '#f85149' },
+};
+const DIFF = {
+  easy: { name: 'آسان', label: 'سطح آسان', level: 1 },
+  medium: { name: 'متوسط', label: 'سطح متوسط', level: 2 },
+  hard: { name: 'سخت', label: 'سطح سخت', level: 3 },
+};
 
 /**
  * Games. Display values (category/difficulty labels) are provided via the
  * `categoryConfig` / `difficultyConfig` objects, mirroring the real backend.
+ * `featured: true` games are returned by `GET /games/featured`.
  */
 const games = [
   {
-    id: GID.haftSang,
-    slug: 'haft-sang',
-    title: 'هفت‌سنگ',
+    id: GID.haftSang, slug: 'haft-sang', title: 'هفت‌سنگ',
     description: 'بازی سنتی هفت‌سنگ با توپ و چیدن سنگ‌ها.',
-    thumbnail: null,
-    category: null,
-    difficulty: null,
-    categoryConfig: { name: 'گروهی', label: 'بازی گروهی', color: '#4ea1ff' },
-    difficultyConfig: { name: 'متوسط', label: 'سطح متوسط', level: 2 },
-    viewCount: 0,
-    videoIds: [VID.haftSangIntro, VID.haftSangPro],
+    thumbnail: null, category: null, difficulty: null,
+    categoryConfig: CAT.group, difficultyConfig: DIFF.medium,
+    featured: true, viewCount: 0, videoIds: [VID.haftSangIntro, VID.haftSangPro],
   },
   {
-    id: GID.alak,
-    slug: 'alak-dolak',
-    title: 'الک‌دولک',
+    id: GID.alak, slug: 'alak-dolak', title: 'الک‌دولک',
     description: 'بازی سنتی با دو چوب، نیازمند دقت و هماهنگی.',
-    thumbnail: null,
-    category: null,
-    difficulty: null,
-    categoryConfig: { name: 'مهارتی', label: 'بازی مهارتی', color: '#3fb950' },
-    difficultyConfig: { name: 'سخت', label: 'سطح سخت', level: 3 },
-    viewCount: 0,
-    videoIds: [VID.alakIntro],
+    thumbnail: null, category: null, difficulty: null,
+    categoryConfig: CAT.skill, difficultyConfig: DIFF.hard,
+    featured: true, viewCount: 0, videoIds: [VID.alakIntro],
   },
   {
-    id: GID.golYaPooch,
-    slug: 'gol-ya-pooch',
-    title: 'گل‌یا‌پوچ',
+    id: GID.golYaPooch, slug: 'gol-ya-pooch', title: 'گل‌یا‌پوچ',
     description: 'بازی حدس زدن دونفره/گروهی با یک شیء کوچک.',
-    thumbnail: null,
-    category: null,
-    difficulty: null,
-    categoryConfig: { name: 'فکری', label: 'بازی فکری', color: '#d29922' },
-    difficultyConfig: { name: 'آسان', label: 'سطح آسان', level: 1 },
-    viewCount: 0,
-    videoIds: [VID.golIntro],
+    thumbnail: null, category: null, difficulty: null,
+    categoryConfig: CAT.mind, difficultyConfig: DIFF.easy,
+    featured: false, viewCount: 0, videoIds: [VID.golIntro],
+  },
+  {
+    id: GID.lakkoDori, slug: 'lakko-dori', title: 'لک‌و‌دوری',
+    description: 'بازی محلی با چوب و حلقه و دقت بالا.',
+    thumbnail: null, category: null, difficulty: null,
+    categoryConfig: CAT.skill, difficultyConfig: DIFF.medium,
+    featured: true, viewCount: 0, videoIds: [VID.lakkoIntro],
+  },
+  {
+    id: GID.gorgomBazi, slug: 'gorgom-be-hava', title: 'گرگم‌به‌هوا',
+    description: 'بازی پرتحرک دونده و گریز برای جمع‌های بزرگ.',
+    thumbnail: null, category: null, difficulty: null,
+    categoryConfig: CAT.active, difficultyConfig: DIFF.easy,
+    featured: false, viewCount: 0, videoIds: [VID.gorgomIntro],
+  },
+  {
+    id: GID.yegholeDoghol, slug: 'yeghol-doghol', title: 'یه‌قل‌دوقل',
+    description: 'بازی مهارتی با پنج سنگ‌ریزه و هماهنگی دست.',
+    thumbnail: null, category: null, difficulty: null,
+    categoryConfig: CAT.skill, difficultyConfig: DIFF.hard,
+    featured: false, viewCount: 0, videoIds: [VID.yegholIntro],
+  },
+  {
+    id: GID.zooBaazi, slug: 'zoo', title: 'زو',
+    description: 'بازی نفس‌گیر گروهی پرهیجان.',
+    thumbnail: null, category: null, difficulty: null,
+    categoryConfig: CAT.group, difficultyConfig: DIFF.medium,
+    featured: true, viewCount: 0, videoIds: [VID.zooIntro],
+  },
+  {
+    id: GID.tabBazi, slug: 'tab-bazi', title: 'تب‌بازی',
+    description: 'بازی تعادل و سرعت برای دو نفر.',
+    thumbnail: null, category: null, difficulty: null,
+    categoryConfig: CAT.active, difficultyConfig: DIFF.easy,
+    featured: false, viewCount: 0, videoIds: [VID.tabIntro],
   },
 ];
 
@@ -148,6 +193,7 @@ function publicGame(g) {
     difficulty: g.difficulty,
     categoryConfig: g.categoryConfig,
     difficultyConfig: g.difficultyConfig,
+    featured: g.featured,
     viewCount: g.viewCount,
     videos: g.videoIds.map((id) => publicVideo(videos.get(id))),
   };
@@ -240,9 +286,19 @@ function publicUser(u) {
 }
 
 function ensureUserCollections(uid) {
-  if (!favorites.has(uid)) favorites.set(uid, new Set());
-  if (!wishlist.has(uid)) wishlist.set(uid, new Set([GID.golYaPooch]));
-  if (!watchHistory.has(uid)) watchHistory.set(uid, new Map());
+  if (!favorites.has(uid)) favorites.set(uid, new Set([GID.haftSang]));
+  if (!wishlist.has(uid)) wishlist.set(uid, new Set([GID.golYaPooch, GID.zooBaazi]));
+  if (!watchHistory.has(uid)) {
+    // Seed a little watch history so "continue watching" is non-empty on first login.
+    const now = Date.now();
+    watchHistory.set(
+      uid,
+      new Map([
+        [VID.haftSangIntro, { videoId: VID.haftSangIntro, progress: 140, updatedAt: new Date(now - 3600_000).toISOString() }],
+        [VID.golIntro, { videoId: VID.golIntro, progress: 60, updatedAt: new Date(now - 7200_000).toISOString() }],
+      ])
+    );
+  }
   if (!tokenBalances.has(uid)) tokenBalances.set(uid, 120);
 }
 
@@ -337,7 +393,7 @@ async function handle(req, res, method, path, query) {
 
   // ----- Games -----
   if (method === 'GET' && path === '/games/featured') {
-    return send(res, 200, games.slice(0, 2).map(publicGame));
+    return send(res, 200, games.filter((g) => g.featured).map(publicGame));
   }
 
   if (method === 'GET' && path === '/games') {

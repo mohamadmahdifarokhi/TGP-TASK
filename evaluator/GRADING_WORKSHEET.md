@@ -14,15 +14,15 @@ Award each category against the observable full-credit / partial-credit / zero c
 
 | Category | Max | Score | Notes |
 | --- | --- | --- | --- |
-| Project setup and structure | 10 |  |  |
-| API client layer | 10 |  |  |
-| Authentication and state management | 20 |  |  |
-| Core screens and features | 25 |  |  |
-| Error and loading handling | 10 |  |  |
-| Seeded-bug fixing | 10 |  |  |
+| UI/UX visual design across all screens | 35 |  |  |
+| Design system & reusable component quality | 15 |  |  |
+| Discover screen (UI + data composition) | 15 |  |  |
+| States & interaction/motion polish | 10 |  |  |
+| Seeded-bug fixing | 5 |  |  |
+| Architecture & correctness | 5 |  |  |
 | Git workflow | 5 |  |  |
 | AI-usage documentation | 5 |  |  |
-| README quality | 5 |  |  |
+| README quality & screenshots | 5 |  |  |
 | **TOTAL** | **100** |  |  |
 
 ---

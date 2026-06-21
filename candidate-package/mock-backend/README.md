@@ -66,10 +66,12 @@ Any valid `09xxxxxxxxx` number works; a user is created on first verify.
 
 ## Seed data
 
-Three games (هفت‌سنگ، الک‌دولک، گل‌یا‌پوچ) with stable UUIDs and embedded videos.
-هفت‌سنگ has one **premium** video to exercise the access-gate (`hasAccess: false`)
-for non-subscribed users. The wishlist is pre-seeded with one game so the wishlist
-screen is non-empty.
+Eight traditional games across four categories (گروهی، مهارتی، فکری، تحرکی), each with one
+or more videos; some games are marked `featured` (returned by `GET /games/featured`) and a
+couple of videos are **premium** to exercise the access-gate (`hasAccess: false`) for
+non-subscribed users. On first login each user is seeded with a couple of favorites, a
+wishlist, and some watch history so the Discover/continue-watching and list screens are
+non-empty out of the box.
 
 > This mock is for local development and grading only. It is not a production server
 > (no real auth, no persistence, in-memory data).

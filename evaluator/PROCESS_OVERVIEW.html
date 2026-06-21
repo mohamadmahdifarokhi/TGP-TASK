@@ -176,10 +176,11 @@
   <div class="toc">
     <a href="#what">۱. چی می‌دیم</a>
     <a href="#expect">۲. انتظار چیه</a>
-    <a href="#bugs">۳. باگ‌های کاشته‌شده</a>
-    <a href="#scoring">۴. نمره‌دهی</a>
-    <a href="#process">۵. پروسهٔ گرفتن نمره</a>
-    <a href="#handover">۶. تحویل امن</a>
+    <a href="#frontend">۳. از فرانت دقیقاً چی می‌خوایم</a>
+    <a href="#bugs">۴. باگ‌های کاشته‌شده</a>
+    <a href="#scoring">۵. نمره‌دهی</a>
+    <a href="#process">۶. پروسهٔ گرفتن نمره</a>
+    <a href="#handover">۷. تحویل امن</a>
   </div>
 
   <section id="what">
@@ -189,33 +190,62 @@
       <thead><tr><th>فایل / پوشه</th><th>توضیح</th></tr></thead>
       <tbody>
         <tr><td><code>candidate-app/</code></td><td>اپ React Native (Expo) که سرتاسر کار می‌کند ولی ۶ باگ عمدی دارد.</td></tr>
-        <tr><td><code>ASSIGNMENT.md</code></td><td>شرح کامل تسک، استک پیشنهادی، حقایق تأییدشدهٔ بک‌اند، Git workflow و مراحل تحویل.</td></tr>
+        <tr><td><code>mock-backend/</code></td><td>بک‌اند mock بدون‌وابستگی (Node خالص) — همهٔ endpointها و دیتای seed برای اجرای لوکال.</td></tr>
+        <tr><td><code>ASSIGNMENT.md</code></td><td>شرح کامل تسک، بخش feature «Discover»، استک پیشنهادی، حقایق بک‌اند، Git workflow و مراحل تحویل.</td></tr>
         <tr><td><code>BUGS.md</code></td><td>فقط <strong>علائم</strong> ۶ باگ (بدون ریشه و راه‌حل).</td></tr>
         <tr><td><code>README.md</code></td><td>قالب خالی برای کاندیدا تا پر کند (نحوهٔ اجرا، env، ساختار، نگاشت صفحه↔endpoint).</td></tr>
         <tr><td><code>AI_USAGE.md</code></td><td>قالب مستندسازی استفاده از ابزار AI.</td></tr>
         <tr><td><code>BUGFIX_NOTES.md</code></td><td>قالب ثبت ریشه و راه‌حل هر باگ + تفکیک AI/دستی.</td></tr>
       </tbody>
     </table>
-    <div class="note">بک‌اند NestJS واقعی یک <strong>وابستگی ثابت خارجی</strong> است — کاندیدا آن را تغییر نمی‌دهد، فقط کلاینت را به آن وصل می‌کند. OTP در حالت dev در پاسخ برمی‌گردد، پس کل فلو بدون SMS قابل تست است.</div>
+    <div class="note">بک‌اند به‌صورت یک <strong>mock بدون‌وابستگی</strong> داخل <code>mock-backend/</code> همراه پکیج داده می‌شود (فقط <code>node server.js</code>). قراردادش ثابت است و کاندیدا تغییرش نمی‌دهد — فقط کلاینت را به آن وصل می‌کند. OTP در پاسخ برمی‌گردد، پس کل فلو بدون SMS و بدون دیتابیس قابل تست است.</div>
   </section>
 
   <section id="expect">
     <h2>۲. انتظار چه کاری داریم؟</h2>
-    <p>تسک برای تقریباً <strong>یک روز کاری (~۸ ساعت)</strong> طراحی شده. کاندیدا باید:</p>
+    <p>تسک برای تقریباً <strong>دو روز (~۱۶ ساعت)</strong> طراحی شده. کاندیدا باید:</p>
     <ul>
-      <li>اپ را روی بک‌اند واقعی به‌درستی اجرا کند (لایه‌بندی تمیز: UI → state → API client → backend).</li>
-      <li>هر ۶ باگ کاشته‌شده را پیدا و رفع کند و هر کدام را در <code>BUGFIX_NOTES.md</code> مستند کند.</li>
-      <li>فلو احراز هویت OTP، persist و refresh خودکار توکن را درست پیاده کند.</li>
-      <li>صفحات اصلی (کاتالوگ، جزئیات بازی، پخش ویدیو، علاقه‌مندی‌ها، wishlist، تاریخچه، پروفایل) را کامل کند.</li>
-      <li>حالت‌های loading / error / empty را در همهٔ صفحات داشته باشد.</li>
-      <li>هر فیکس را به‌صورت یک کامیت <code>fix:</code> مجزا با ارجاع به شناسهٔ باگ کامیت کند (Conventional Commits).</li>
+      <li>اپ را روی بک‌اند (mock همراه پکیج) اجرا کند و باگ‌ها را رفع کند تا اپ کامل کار کند.</li>
+      <li><strong>UI/UX همهٔ صفحه‌های موجود را از پایه بازطراحی و بهتر کند</strong> — این بخش اصلی و سنگین‌ترین وزن نمره است. اپ استارتر عمداً بدون استایل تحویل شده.</li>
+      <li>یک <strong>design system</strong> خودش بسازد (tokens + کامپوننت‌های reusable).</li>
+      <li>یک صفحهٔ Discover جدید به‌عنوان landing بسازد (featured rail، continue-watching، دسته‌بندی، جستجو).</li>
+      <li>هر ۶ باگ کاشته‌شده را پیدا و رفع کند و در <code>BUGFIX_NOTES.md</code> مستند کند (وزن کم).</li>
+      <li>در صورت تمایل ساختار/معماری پروژه را هم بهتر کند (پاداش دارد).</li>
+      <li>حالت‌های loading / error / empty طراحی‌شده در همهٔ صفحات داشته باشد.</li>
       <li>کد را روی یک ریپوی <strong>public</strong> با تاریخچهٔ کامل git پوش کند و لینکش را بدهد.</li>
-      <li>سه مستند <code>README.md</code>، <code>AI_USAGE.md</code>، <code>BUGFIX_NOTES.md</code> را پر کند.</li>
+      <li>سه مستند <code>README.md</code> (با <strong>اسکرین‌شات همهٔ صفحه‌ها</strong>)، <code>AI_USAGE.md</code>، <code>BUGFIX_NOTES.md</code> را پر کند.</li>
     </ul>
+    <div class="note">جمع‌بندی: این تسک <strong>UI/UX-first</strong> است. اپ از قبل کار می‌کند ولی زشت است؛ کار اصلی فرانت، بازطراحی و صیقل کل اپ است. اپِ «کار می‌کند ولی زشت» باید نمرهٔ پایین بگیرد.</div>
+  </section>
+
+  <section id="frontend">
+    <h2>۳. از فرانت دقیقاً چی می‌خوایم؟</h2>
+    <p>اپ استارتر همهٔ صفحات و لایهٔ داده را از قبل دارد و کار می‌کند، ولی <strong>عمداً بدون استایل</strong> است (ویوهای خام React Native). این صفحه‌ها <strong>بِیس</strong> هستند؛ تعریف می‌کنند اپ چه‌کار می‌کند، نه این‌که چقدر خوب به‌نظر می‌رسد. کار اصلی فرانت اینه که اینها را به یک محصول واقعی و صیقلی تبدیل کند.</p>
+
+    <h3>الف) بازطراحی UI/UX همهٔ صفحه‌ها (بخش اصلی — ~۶۰ امتیاز)</h3>
+    <p>همهٔ این صفحه‌ها باید از حالت خام به طراحی production تبدیل شوند: Phone، OTP، Catalog، Game Detail، Video Player، Favorites، Wishlist، Watch History، Profile، و Discover.</p>
+    <ul>
+      <li><strong>طراحی بصری در همهٔ صفحه‌ها (۳۵):</strong> layout، ریتم spacing، مقیاس تایپوگرافی، رنگ/کنتراست، سلسله‌مراتب، آیکن، و انسجام بصری بین همهٔ صفحه‌ها. RTL فارسی درست.</li>
+      <li><strong>Design system و کامپوننت‌های reusable (۱۵):</strong> tokens متمرکز (رنگ/spacing/تایپو/شعاع/سایه) + کتابخانهٔ کوچک کامپوننت (Button، Card، Input، Badge، …). بدون magic number پراکنده یا کپی‌پیست استایل.</li>
+      <li><strong>States و interaction/motion (۱۰):</strong> loading/error/empty طراحی‌شده (skeleton/shimmer)، حالت pressed/disabled، keyboard avoidance، pull-to-refresh، optimistic UI.</li>
+    </ul>
+
+    <h3>ب) صفحهٔ Discover جدید (۱۵)</h3>
+    <p>یک landing جدید: featured rail (<code>GET /games/featured</code>)، continue-watching (<code>GET /watch-history</code>، خالی شد مخفی)، دسته‌بندی از <code>GET /games</code> با <code>categoryConfig</code>، و جستجوی debounce‌شده. تب اولیهٔ authenticated باشد و از API client و state مشترک استفاده کند.</p>
+
+    <h3>ج) موارد ثانویه (وزن کم)</h3>
+    <ul>
+      <li><strong>رفع ۶ باگ (۵):</strong> برای این‌که اپ واقعاً کار کند؛ مستند در <code>BUGFIX_NOTES.md</code>.</li>
+      <li><strong>معماری و ساختار (۵):</strong> حفظ لایه‌بندی و typecheck تمیز. <strong>اگر ساختار/فولدربندی را بهتر کند (مثلاً feature-based) و توجیه کند، پاداش می‌گیرد</strong> — می‌خواهیم ببینیم کی ساختار بهتری انتخاب می‌کند.</li>
+      <li>Git workflow، AI usage، و README با <strong>اسکرین‌شات همهٔ صفحه‌ها</strong> (هر کدام ۵).</li>
+    </ul>
+
+    <div class="danger"><strong>قانون gating:</strong> اگر اپ هنوز شبیه استارترِ بدون‌استایل باشد، دسته‌های ۱ تا ۴ نمی‌توانند از ~۳۰٪ بالاتر بروند — هرچقدر هم کد تمیز باشد. هدف این تسک، صنعتگریِ فرانت است.</div>
+    <div class="note">داده‌های mock غنی است (۸ بازی، ۴ دسته، ۴ featured، تاریخچهٔ seed‌شده). کاندیدا می‌تواند کتابخانهٔ UI/آیکن/انیمیشن اضافه کند اگر در README توجیه کند، ولی طراحی (layout و زبان بصری) باید کار خودش باشد.</div>
   </section>
 
   <section id="bugs">
-    <h2>۳. باگ‌های کاشته‌شده (کلید پاسخ — محرمانه)</h2>
+    <h2>۴. باگ‌های کاشته‌شده (کلید پاسخ — محرمانه)</h2>
     <p>۶ باگ در حوزه‌های auth، API، state و UI پخش شده‌اند. هر باگ به یک property test متصل است که با رفع باگ سبز می‌شود.</p>
     <table>
       <thead><tr><th>باگ</th><th>حوزه</th><th>علامت</th><th>ریشه (خلاصه)</th></tr></thead>
@@ -262,48 +292,48 @@
   </section>
 
   <section id="scoring">
-    <h2>۴. چطور نمره می‌دهیم؟ (۱۰۰ امتیاز)</h2>
+    <h2>۵. چطور نمره می‌دهیم؟ (۱۰۰ امتیاز)</h2>
     <p>هر دسته مستقل و بر اساس <strong>رفتار قابل‌مشاهده</strong> نمره می‌گیرد. سه باند: امتیاز کامل / جزئی / صفر.</p>
     <table>
       <thead><tr><th class="num">#</th><th>دسته</th><th class="num">امتیاز</th></tr></thead>
       <tbody>
-        <tr><td class="num">۱</td><td>راه‌اندازی و ساختار پروژه</td><td class="num">۱۰</td></tr>
-        <tr><td class="num">۲</td><td>لایهٔ API client</td><td class="num">۱۰</td></tr>
-        <tr><td class="num">۳</td><td>احراز هویت و مدیریت state</td><td class="num">۲۰</td></tr>
-        <tr><td class="num">۴</td><td>صفحات و قابلیت‌های اصلی</td><td class="num">۲۵</td></tr>
-        <tr><td class="num">۵</td><td>مدیریت error و loading</td><td class="num">۱۰</td></tr>
-        <tr><td class="num">۶</td><td>رفع باگ‌های کاشته‌شده</td><td class="num">۱۰</td></tr>
+        <tr><td class="num">۱</td><td>طراحی بصری UI/UX در همهٔ صفحه‌ها</td><td class="num">۳۵</td></tr>
+        <tr><td class="num">۲</td><td>Design system و کیفیت کامپوننت reusable</td><td class="num">۱۵</td></tr>
+        <tr><td class="num">۳</td><td>صفحهٔ Discover (UI + ترکیب داده)</td><td class="num">۱۵</td></tr>
+        <tr><td class="num">۴</td><td>States و صیقل interaction/motion</td><td class="num">۱۰</td></tr>
+        <tr><td class="num">۵</td><td>رفع باگ‌های کاشته‌شده</td><td class="num">۵</td></tr>
+        <tr><td class="num">۶</td><td>معماری و صحت (API client، state، ساختار، typecheck)</td><td class="num">۵</td></tr>
         <tr><td class="num">۷</td><td>Git workflow</td><td class="num">۵</td></tr>
         <tr><td class="num">۸</td><td>مستندسازی استفاده از AI</td><td class="num">۵</td></tr>
-        <tr><td class="num">۹</td><td>کیفیت README</td><td class="num">۵</td></tr>
+        <tr><td class="num">۹</td><td>کیفیت README و اسکرین‌شات‌ها</td><td class="num">۵</td></tr>
         <tr class="total-row"><td class="num">—</td><td>مجموع</td><td class="num">۱۰۰</td></tr>
       </tbody>
     </table>
 
     <h3>نکات کلیدی نمره‌دهی</h3>
     <ul>
-      <li><strong>قانون صفر در صورت حذف:</strong> اگر یک deliverable لازم برای یک دسته حذف شده باشد، آن دسته صفر می‌گیرد — صرف‌نظر از کیفیت بقیهٔ کار.</li>
-      <li><strong>چک‌اوت تمیز:</strong> روی یک clone تازه و طبق README خودِ کاندیدا نمره می‌دهیم؛ هیچ فایلی دستی اصلاح نمی‌کنیم. اگر طبق مستندات اجرا نشد، خودش یک سیگنال نمره است.</li>
-      <li><strong>مبتنی بر شواهد:</strong> برای هر کسر امتیاز، رفتار مشاهده‌شده (صفحه، خروجی دستور، فایل/خط) ثبت می‌شود.</li>
-      <li><strong>Property tests:</strong> چند باگ یک property را قرمز کرده‌اند؛ رفع باگ آن را سبز می‌کند (regression قابل سنجش).</li>
+      <li><strong>UI-first:</strong> ~۶۰ از ۱۰۰ امتیاز کیفیت بصری و تعاملی است. اپِ «کار می‌کند ولی زشت» باید نمرهٔ پایین بگیرد.</li>
+      <li><strong>قانون gating:</strong> اگر اپ هنوز شبیه استارترِ بدون‌استایل باشد، دسته‌های ۱ تا ۴ از ~۳۰٪ بالاتر نمی‌روند.</li>
+      <li><strong>چک‌اوت تمیز:</strong> روی یک clone تازه و طبق README خودِ کاندیدا نمره می‌دهیم؛ هیچ فایلی دستی اصلاح نمی‌کنیم.</li>
+      <li><strong>مبتنی بر شواهد:</strong> برای هر کسر امتیاز، چیزی که در اپ دیده شده (صفحه، اسکرین‌شات، فایل/خط) ثبت می‌شود.</li>
       <li><strong>Stretch goals:</strong> جدا یادداشت می‌شوند و هرگز مجموع را بالای ۱۰۰ نمی‌برند.</li>
     </ul>
 
     <div class="grid">
-      <div class="tile"><h4>سنگین‌ترین دسته</h4><div class="pts">۲۵</div><p>صفحات و قابلیت‌های اصلی (۵ حوزه × ۵).</p></div>
-      <div class="tile"><h4>auth + state</h4><div class="pts">۲۰</div><p>OTP، persist، 401→refresh→retry یک‌بار.</p></div>
-      <div class="tile"><h4>کیفیت/مستندات</h4><div class="pts">۱۵</div><p>Git + AI usage + README روی هم.</p></div>
+      <div class="tile"><h4>سنگین‌ترین دسته</h4><div class="pts">۳۵</div><p>طراحی بصری UI/UX در همهٔ صفحه‌ها.</p></div>
+      <div class="tile"><h4>Design system</h4><div class="pts">۱۵</div><p>tokens + کامپوننت‌های reusable.</p></div>
+      <div class="tile"><h4>Discover</h4><div class="pts">۱۵</div><p>landing با featured/continue/category/search.</p></div>
     </div>
   </section>
 
   <section id="process">
-    <h2>۵. پروسهٔ عملی گرفتن نمره</h2>
+    <h2>۶. پروسهٔ عملی گرفتن نمره</h2>
     <ol class="steps">
-      <li>بک‌اند JamJoys را بالا بیاور و مطمئن شو <code>POST /auth/send-otp</code> مقدار dev <code>otp</code> را برمی‌گرداند.</li>
+      <li>mock backend را بالا بیاور (<code>cd mock-backend && node server.js</code>) و مطمئن شو <code>POST /auth/send-otp</code> مقدار <code>otp</code> را برمی‌گرداند.</li>
       <li>از سابمیشن کاندیدا یک clone تازه بگیر؛ دستور install مستندشده را اجرا کن (بدون اصلاح دستی).</li>
-      <li>اپ را روی بک‌اند اجرا کن و اسکریپت‌های <code>typecheck</code> و <code>test</code> را بگیر.</li>
-      <li>هر صفحه را به‌صورت دستی پیمایش کن و رفتار قابل‌مشاهده را با رابریک تطبیق بده.</li>
-      <li>هر باگ را با <code>BUG_ANSWER_KEY.md</code> راستی‌آزمایی کن (آیا علامت رفع شده؟ آیا property سبز شده؟).</li>
+      <li>اپ را روی بک‌اند اجرا کن و <code>typecheck</code> را بگیر.</li>
+      <li><strong>هر صفحه را در اپِ در حال اجرا نگاه کن</strong> و کیفیت بصری/تعاملی‌اش را با باندهای رابریک تطبیق بده — این بخش اصلی قضاوت است. اسکرین‌شات‌های README کمک می‌کنند ولی در اپ تأیید کن.</li>
+      <li>هر باگ را با <code>BUG_ANSWER_KEY.md</code> راستی‌آزمایی کن (آیا علامت رفع شده؟).</li>
       <li>هر دسته را مستقل نمره بده و در <code>GRADING_WORKSHEET.md</code> با شواهد ثبت کن.</li>
       <li>مجموع را از ۱۰۰ حساب کن؛ stretch goals را جداگانه یادداشت کن.</li>
     </ol>
@@ -311,7 +341,7 @@
   </section>
 
   <section id="handover">
-    <h2>۶. تحویل امن (یادآوری)</h2>
+    <h2>۷. تحویل امن (یادآوری)</h2>
     <p>قبل از فرستادن هر چیزی به کاندیدا، مطمئن شو پوشهٔ <code>evaluator/</code> داخلش نیست.</p>
     <pre><code># پوشه نباید در working tree باشد
 test ! -e evaluator/ && echo "OK: absent" || echo "FAIL: present"

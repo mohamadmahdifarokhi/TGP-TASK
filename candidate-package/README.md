@@ -108,6 +108,35 @@ candidate-app/src/
 | TODO: Wishlist | List wishlist | `GET /favorites/wishlist` |
 | TODO: Watch History | List watched videos | `GET /watch-history` |
 | TODO: Profile | View/edit profile, token balance, logout | `GET /auth/me`, `PATCH /users/me`, `GET /users/me/token-balance`, `POST /auth/logout` |
+| TODO: **Discover** (new) | Featured + continue-watching + browse-by-category + search | `GET /games/featured`, `GET /games`, `GET /watch-history` |
+
+---
+
+## 4b. Design System & UI/UX Decisions — Screenshots
+
+<!-- This is a UI/UX-first assignment. Redesigning every screen is the main deliverable and the
+     bulk of the score. Use this section to present your design system and to SHOW your work. -->
+
+> **TODO — this is the heart of the submission.** Describe and **show** your redesign:
+>
+> - **Design system:** your tokens (color, spacing, typography, radius, shadow) and the reusable
+>   components you built (buttons, cards, inputs, badges, section headers, list rows, skeletons).
+> - **Design decisions:** the visual direction, how you handle loading/empty/error states,
+>   interaction/motion, RTL/Persian layout, and any UI/icon/animation library you added (and why).
+> - **Project structure:** if you reorganized the folder/architecture, explain what and why.
+> - **Screenshots of EVERY redesigned screen** (Phone, OTP, Catalog, Game Detail, Video Player,
+>   Favorites, Wishlist, Watch History, Profile, Discover). A short screen recording is welcome too.
+
+| Screen | Screenshot |
+| --- | --- |
+| Phone / OTP | TODO |
+| Catalog | TODO |
+| Game Detail | TODO |
+| Video Player | TODO |
+| Favorites / Wishlist | TODO |
+| Watch History | TODO |
+| Profile | TODO |
+| Discover | TODO |
 
 ---
 
