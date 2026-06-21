@@ -2,8 +2,8 @@
  * AuthStack — the unauthenticated navigation stack.
  *
  * A native-stack containing the two screens of the OTP sign-in flow:
- *   - `Phone` → enter a mobile number and request an OTP (Req 3.1–3.3).
- *   - `Otp`   → enter the 6-digit code and verify it (Req 3.4–3.6).
+ *   - `Phone` → enter a mobile number and request an OTP.
+ *   - `Otp`   → enter the 6-digit code and verify it.
  *
  * The route contract ({@link AuthStackParamList}) is authored alongside
  * {@link PhoneScreen}; we import it here rather than redeclaring it so the
@@ -12,7 +12,7 @@
  * This stack is only ever mounted by {@link RootNavigator} while the session is
  * `unauthenticated`. Once `verify-otp` succeeds the Auth_Store flips to
  * `authenticated` and the root navigator swaps this stack out for the app tabs,
- * so there is no in-stack route from here into any protected screen (Req 4.7).
+ * so there is no in-stack route from here into any protected screen.
  */
 
 import React from 'react';

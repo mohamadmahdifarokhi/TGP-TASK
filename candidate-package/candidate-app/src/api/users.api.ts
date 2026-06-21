@@ -3,17 +3,16 @@
  *
  * Typed functions for the JamJoys users endpoints. Calls route through the
  * shared {@link request} helper so failures surface as a structured `ApiError`
- * (Requirement 2.3) and the 401 refresh/retry interceptor applies uniformly.
+ * and the 401 refresh/retry interceptor applies uniformly.
  * Each function returns the parsed `response.data`.
  *
- * Routes (targeted exactly as published — Requirement 2.6):
+ * Routes (targeted exactly as published
  * - `get`                → `GET   /users/:id`
  * - `updateMe`           → `PATCH /users/me`
  * - `uploadAvatar`       → `POST  /users/me/avatar`            (multipart `file`)
  * - `tokenBalance`       → `GET   /users/me/token-balance`     → `{ balance }`
  * - `subscriptionStatus` → `GET   /users/me/subscription-status`
  *
- * Requirements: 2.5, 2.6, 9.1, 9.2, 9.3
  */
 
 import { request } from './client';

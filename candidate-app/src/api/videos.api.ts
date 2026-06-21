@@ -3,15 +3,14 @@
  *
  * Typed functions for the JamJoys videos endpoints. Calls route through the
  * shared {@link request} helper so failures surface as a structured `ApiError`
- * (Requirement 2.3) and the 401 refresh/retry interceptor applies uniformly.
+ * and the 401 refresh/retry interceptor applies uniformly.
  * Each function returns the parsed `response.data`.
  *
- * Routes (targeted exactly as published — Requirement 2.6):
+ * Routes (targeted exactly as published
  * - `get`            → `GET /videos/:id`                  (public)
  * - `validateAccess` → `GET /videos/:id/validate-access`  (auth required)
  * - `stream`         → `GET /videos/:id/stream`           (auth required)
  *
- * Requirements: 2.5, 2.6, 7.1, 7.2
  */
 
 import { request } from './client';

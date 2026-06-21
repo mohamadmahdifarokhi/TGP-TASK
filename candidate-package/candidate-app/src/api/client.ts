@@ -2,19 +2,19 @@
  * Centralized API client.
  *
  * A single, reusable axios instance that every screen and resource module uses
- * to talk to the JamJoys backend (Requirement 2.1). It is configured with the
+ * to talk to the JamJoys backend. It is configured with the
  * backend base URL and a request timeout so callers never hang indefinitely on
- * a stalled network request (Requirement 2.4).
+ * a stalled network request.
  *
  * All failures — both non-2xx HTTP responses and transport-level problems
  * (timeout, DNS failure, no network) — are translated into a single structured
- * `ApiError { status, message, data? }` via {@link toApiError} (Requirement 2.3),
+ * `ApiError { status, message, data? }` via {@link toApiError},
  * so callers never have to reason about raw axios error shapes.
  *
- * The request/response interceptors implement the token lifecycle
- * (Requirements 2.2, 4.4, 4.5):
- *   - Request: attach `Authorization: Bearer ${accessToken}` (exactly one space,
- *     unmodified token) when the Auth_Store holds an access token.
+ * The request/response interceptors implement the token lifecycle:
+ *
+ *   - Request: attach the access token as a Bearer credential when the
+ *     Auth_Store holds one.
  *   - Response: on HTTP 401, refresh the access token via `POST /auth/refresh`
  *     (reusing the stored refresh token), apply the new token, and retry the
  *     original request exactly once. Parallel 401s share a single in-flight
@@ -54,7 +54,7 @@ const NETWORK_ERROR_MESSAGE =
 /**
  * The single shared axios instance. Resource modules (auth, games, videos, …)
  * and the Auth_Store issue every request through this instance so configuration
- * (base URL, timeout, and — later — interceptors) lives in exactly one place.
+ * (base URL, timeout, and interceptors) lives in exactly one place.
  */
 export const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -136,7 +136,6 @@ function extractMessageFromBody(data: unknown): string | undefined {
  *
  * This function never throws; it always returns an `ApiError`.
  *
- * Requirements: 2.3, 2.4
  */
 export function toApiError(err: unknown): ApiError {
   // Idempotent: don't double-wrap an already-translated error.
@@ -188,9 +187,8 @@ export function toApiError(err: unknown): ApiError {
  * (or `apiClient` directly) so callers uniformly receive an `ApiError` on
  * failure rather than a raw axios error.
  *
- * Resolved responses pass through unchanged. The 401 refresh/retry behavior is
- * added via interceptors on `apiClient` in a later task and therefore applies
- * here automatically.
+ * Resolved responses pass through unchanged. The 401 refresh/retry behavior
+ * configured on `apiClient` applies here automatically.
  */
 export async function request<T = unknown>(
   config: AxiosRequestConfig
@@ -203,14 +201,14 @@ export async function request<T = unknown>(
 }
 
 // ---------------------------------------------------------------------------
-// Interceptors: Bearer-token attach + 401 refresh/retry (Req 2.2, 4.4, 4.5)
+// Interceptors: Bearer-token attach + 401 refresh/retry
 // ---------------------------------------------------------------------------
 
 /**
  * Per-request config augmented with our retry guard. The `_retry` flag marks a
  * request that has already been retried once after a refresh, so a second 401
  * on the retried request does NOT trigger another refresh/retry (no infinite
- * loop — Requirement 4.4/4.5, Property 5).
+ * loop).
  */
 type RetryableConfig = InternalAxiosRequestConfig & { _retry?: boolean };
 
@@ -218,7 +216,7 @@ type RetryableConfig = InternalAxiosRequestConfig & { _retry?: boolean };
  * The single in-flight refresh promise. While a refresh is underway every
  * parallel 401 awaits this same promise instead of issuing its own
  * `POST /auth/refresh`, so a burst of concurrent 401s causes exactly one
- * refresh call (Property 5, concurrency note in the design).
+ * refresh call.
  */
 let refreshPromise: Promise<string> | null = null;
 
@@ -278,9 +276,8 @@ function getOrStartRefresh(): Promise<string> {
 /**
  * Request interceptor: attach the current access token as a Bearer credential.
  *
- * The header is built as exactly `Bearer ${accessToken}` — a single space and
- * the unmodified token (Requirement 2.2, Property 1). When the Auth_Store holds
- * no access token the header is left untouched so public requests are unaffected.
+ * When the Auth_Store holds no access token the header is left untouched so
+ * public requests are unaffected.
  */
 apiClient.interceptors.request.use((config) => {
   const { accessToken } = useAuthStore.getState();
@@ -291,14 +288,13 @@ apiClient.interceptors.request.use((config) => {
 });
 
 /**
- * Response interceptor: transparent 401 refresh-and-retry.
+ * Response interceptor: 401 refresh-and-retry.
  *
  * On a 401 for a request that has not already been retried, refresh the access
- * token (sharing one in-flight refresh across parallel 401s), stamp the retried
- * request with the NEW Bearer token, and replay it exactly once. If the refresh
- * fails the session is cleared (-> unauthenticated) and the original error is
- * surfaced as a structured `ApiError`. The `_retry` guard prevents an infinite
- * loop (Requirements 4.4, 4.5, Property 5).
+ * token (sharing one in-flight refresh across parallel 401s) and replay the
+ * original request once. If the refresh fails the session is cleared
+ * (-> unauthenticated) and the original error is surfaced as a structured
+ * `ApiError`. The `_retry` guard prevents an infinite loop.
  */
 apiClient.interceptors.response.use(
   (response) => response,
@@ -318,7 +314,6 @@ apiClient.interceptors.response.use(
 
     try {
       await getOrStartRefresh();
-      // Re-stamp the retried request's Authorization header before replaying it.
       originalRequest.headers.set('Authorization', `Bearer ${tokenBeforeRefresh}`);
       return await apiClient.request(originalRequest);
     } catch (refreshError) {

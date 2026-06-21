@@ -7,7 +7,7 @@
  *  - empty: an empty list surfaces the empty state message
  *  - error+retry: a rejected list shows the error state and Retry re-fetches
  *  - timeout/no-hang: a transport-style ApiError rejection surfaces as error
- *    (does not hang on the spinner) (Req 2.4)
+ *    (does not hang on the spinner)
  *
  * Requirements: 5.1, 5.4, 5.5, 2.4
  */
@@ -85,7 +85,7 @@ describe('CatalogScreen (example/edge reference tests)', () => {
     expect(mockedList).toHaveBeenCalledTimes(2);
   });
 
-  it('surfaces a timeout/transport failure as the error state without hanging (Req 2.4)', async () => {
+  it('surfaces a timeout/transport failure as the error state without hanging', async () => {
     // status 0 models a transport failure (timeout / no network) mapped to ApiError.
     const timeoutError: ApiError = { status: 0, message: 'Request timed out' };
     mockedList.mockRejectedValueOnce(timeoutError);

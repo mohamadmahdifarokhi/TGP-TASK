@@ -1,6 +1,6 @@
 // Feature: employment-frontend, Property 2: Non-2xx responses become structured errors
 /**
- * Property-based test for Property 2 (Requirement 2.3).
+ * Property-based test for Property 2.
  *
  * For ANY HTTP status code in the 400–599 range and ANY backend response body,
  * the API client's error translator (`toApiError`, exported from
@@ -12,7 +12,7 @@
  * axios-like error object (`{ isAxiosError: true, response: { status, data },
  * message }`) so the property tests the pure mapping logic, not the network.
  *
- * **Validates: Requirements 2.3**
+ 
  */
 import fc from 'fast-check';
 import type { AxiosError } from 'axios';

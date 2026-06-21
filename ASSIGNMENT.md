@@ -4,13 +4,13 @@
 
 JamJoys is a Persian platform that teaches traditional games through short videos. Users sign in with their Iranian phone number and a one-time password, browse a catalog of games, watch the associated videos, favorite and wishlist games, and track their watch history.
 
-Your task is to build a **fresh React Native frontend** for JamJoys that consumes the **real JamJoys NestJS backend**. The backend already exists and is a **fixed external dependency** — you do not modify it. A starter project lives in [`candidate-app/`](./candidate-app); it is intentionally incomplete and contains a set of seeded bugs you must find and fix (see [`BUGS.md`](./BUGS.md)).
+Your task is to work on a **React Native frontend** for JamJoys that consumes the **real JamJoys NestJS backend**. The backend already exists and is a **fixed external dependency** — you do not modify it. A working starter app lives in [`candidate-app/`](./candidate-app); it runs end-to-end but contains a set of **seeded bugs** that you must locate and fix (see [`BUGS.md`](./BUGS.md)).
 
 This is a graded take-home test. It is designed to be completable in roughly **one working day (~8 hours)** by a competent React Native developer, and it is graded objectively against observable behavior and the deliverables listed below.
 
 ## Scope
 
-Build the consumer-facing mobile app. You are expected to implement:
+The app already implements the consumer-facing screens and the supporting layers. Your job is to get it working correctly by finding and fixing the seeded bugs, and to demonstrate that you understand the codebase. The areas in play are:
 
 - **OTP authentication** — phone entry, OTP entry, token persistence, and automatic token refresh.
 - **Auth state management** — a shared store holding tokens and the current user, persisted across app restarts.
@@ -23,7 +23,7 @@ Creator/upload/admin flows are **out of scope** — this assignment is consumer-
 
 ## Time Budget
 
-Target **~8 hours**. The scope above is sized to fit. If you run short on time, prioritize: working auth + token refresh, the centralized API client, the catalog and detail screens, and clean loading/error handling. Document anything you left incomplete in your `README.md`.
+Target **~8 hours**. The scope above is sized to fit. If you run short on time, prioritize the auth + token-refresh bugs, the API client, and the catalog/detail screens. Document anything you left unfinished in your `README.md`.
 
 ## Recommended Stack (substitutions allowed)
 
@@ -82,12 +82,12 @@ The starter ships with seeded bugs spanning authentication, API integration, sta
 
 ## Running the JamJoys Backend
 
-The backend lives at `/home/tgp-dev/Projects/JamJoys/backend` (NestJS + Prisma + PostgreSQL).
+The JamJoys backend (NestJS + Prisma + PostgreSQL) is provided separately. Place it at a path of your choosing and run it locally.
 
 **Prerequisites:** Node.js 18+, PostgreSQL 14+, FFmpeg, npm.
 
 ```bash
-cd /home/tgp-dev/Projects/JamJoys/backend
+cd <path-to-jamjoys-backend>
 
 # 1. Install dependencies
 npm install

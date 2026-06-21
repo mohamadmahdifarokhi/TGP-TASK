@@ -33,7 +33,7 @@ export const API_BASE_URL: string = resolveApiBaseUrl();
 
 /**
  * Default request timeout in milliseconds. Ensures callers never hang
- * indefinitely on a stalled network request (Requirement 2.4).
+ * indefinitely on a stalled network request.
  */
 export const REQUEST_TIMEOUT_MS = 15000;
 
@@ -63,7 +63,7 @@ export const DEFAULT_INITIAL_PAGE = 1;
 
 /**
  * Interval in milliseconds between watch-history progress posts while a video
- * is playing (Requirement 7.4).
+ * is playing.
  */
 export const WATCH_PROGRESS_INTERVAL_MS = 10000;
 

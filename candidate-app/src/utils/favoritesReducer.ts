@@ -1,19 +1,9 @@
 /**
- * Optimistic favorites reducer (CORRECT reference implementation).
+ * Optimistic favorites reducer.
  *
- * These are PURE functions (no side effects, no I/O) so they can be exercised
- * directly by property-based tests (see Property 9 in the design) and reused by
- * the game detail / favorites screens to apply optimistic favorite toggles.
- *
- * The single most important invariant: a favorite is ALWAYS identified by its
- * `gameId` (the game's `id`), NEVER by its position/index in the list. Keying
- * by index is unsafe because list ordering can change between render and
- * mutation (re-fetch, pagination, filtering), which would flip the wrong game.
- *
- * On a failed mutation the caller reverts EXACTLY the affected game's prior
- * value, leaving every other game untouched (Requirement 8.6).
- *
- * Validates: Requirements 8.1, 8.6
+ * Pure helpers (no side effects, no I/O) used by the game detail / favorites
+ * screens to apply optimistic favorite toggles and to roll them back when a
+ * backend mutation fails.
  */
 
 import type { Game } from '@/api/types';
@@ -47,17 +37,12 @@ function currentValue(game: FavoritableGame): boolean {
 }
 
 /**
- * Returns a NEW list in which ONLY the game whose `id` equals `gameId` has its
- * `isFavorite` flag set to `isFavorite`. Every other game is preserved
- * unchanged (by reference). If no game matches `gameId`, the original list
- * contents are returned in a new array (no-op match).
- *
- * Matching is performed strictly by `id` — never by list position.
+ * Updates the favorite flag for the game targeted by `gameId`.
  *
  * @param games - The current list of games.
  * @param gameId - The `id` of the game to update.
- * @param isFavorite - The favorite value to set on the matched game.
- * @returns A new list with only the matching game's `isFavorite` updated.
+ * @param isFavorite - The favorite value to set on the targeted game.
+ * @returns A new list with the targeted game's `isFavorite` updated.
  */
 export function applyToggle(
   games: readonly FavoritableGame[],
@@ -75,8 +60,7 @@ export function applyToggle(
  *
  * Returns both the `next` list (to render immediately) and the `prev` value of
  * the target game so the caller can restore it via {@link revert} if the
- * backend mutation fails. If no game matches `gameId`, `next` mirrors the input
- * contents and `prev` is `false`.
+ * backend mutation fails.
  *
  * @param games - The current list of games.
  * @param gameId - The `id` of the game to toggle.
@@ -94,15 +78,15 @@ export function optimisticToggle(
 }
 
 /**
- * Restores EXACTLY the game identified by `gameId` to `prevValue`, leaving all
- * other games unchanged. Use this on the failure path of an optimistic toggle
- * to roll back the affected game's favorite state (Requirement 8.6).
+ * Restores the favorite state of the game identified by `gameId` to
+ * `prevValue`. Used on the failure path of an optimistic toggle to roll back
+ * the change.
  *
  * @param games - The current (optimistically-updated) list of games.
  * @param gameId - The `id` of the game to restore.
  * @param prevValue - The prior favorite value to restore (from
  *                    {@link optimisticToggle}).
- * @returns A new list with only the matching game's `isFavorite` reverted.
+ * @returns The rolled-back list of games.
  */
 export function revert(
   games: readonly FavoritableGame[],

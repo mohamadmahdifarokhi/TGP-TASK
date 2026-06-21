@@ -1,25 +1,22 @@
 /**
- * GameDetailScreen — a single game's detail view (CORRECT reference).
+ * GameDetailScreen — a single game's detail view.
  *
- * On mount it loads the game via `games.getBySlugOrId` (Req 6.1) and renders
- * the title, description, and associated videos using the pure `toDisplayGame`
- * mapper for display fields (Req 6.2, 6.5 — never the legacy enum fields).
+ * On mount it loads the game via `games.getBySlugOrId` and renders the title,
+ * description, and associated videos using the `toDisplayGame` mapper for
+ * display fields.
  *
  * Side effects on load:
- *   - Fires `POST /games/:id/view` using the game's UUID `id` (Req 6.3). The
- *     view route is guarded by `ParseUUIDPipe`, so we always pass `game.id`
- *     (the UUID), never the slug used to fetch it.
+ *   - Fires `POST /games/:id/view` using the game's UUID `id`. The view route
+ *     is guarded by `ParseUUIDPipe`, so we pass `game.id` (the UUID), not the
+ *     slug used to fetch it.
  *   - Calls `GET /favorites/:gameId/check` to reflect the current favorite
- *     status in the favorite control (Req 8.3).
+ *     status in the favorite control.
  *
- * Favorite toggle (Req 8.1, 8.2, 8.6): uses the pure `optimisticToggle`
- * reducer keyed by `gameId`, applies the change immediately, calls
- * `favorites.add` / `favorites.remove`, and `revert`s exactly the affected
- * game on failure.
+ * Favorite toggle: uses the `optimisticToggle` reducer, applies the change
+ * immediately, calls `favorites.add` / `favorites.remove`, and rolls back on
+ * failure.
  *
- * Errors funnel through `StateView` with a Retry control (Req 6.4).
- *
- * Requirements: 6.1, 6.2, 6.3, 6.4, 6.5, 8.1, 8.2, 8.3, 8.6
+ * Errors funnel through `StateView` with a Retry control.
  */
 
 import React, { useCallback, useEffect, useState } from 'react';
@@ -42,7 +39,7 @@ import {
   type FavoritableGame,
 } from '../../utils/favoritesReducer';
 
-/** Route params this screen expects (RootNavigator authored in 9.6). */
+/** Route params this screen expects. */
 export type GameDetailScreenParams = { slugOrId: string };
 
 /** Loosely-typed route/navigation so this compiles ahead of the navigator. */
@@ -74,13 +71,13 @@ export function GameDetailScreen({ route }: GameDetailScreenProps): React.ReactE
       const loaded = await games.getBySlugOrId(slugOrId);
       setGameList([{ ...loaded, isFavorite: false }]);
 
-      // Record the view using the game's UUID id (NOT the slug) — Req 6.3.
+      // Record the view using the game's UUID id (NOT the slug).
       // Fire-and-forget: a failed view-record must not block the detail UI.
       void games.recordView(loaded.id).catch(() => {
         /* view tracking is best-effort */
       });
 
-      // Reflect current favorite status on open — Req 8.3.
+      // Reflect current favorite status on open.
       void favorites
         .check(loaded.id)
         .then((res) => {
@@ -126,7 +123,7 @@ export function GameDetailScreen({ route }: GameDetailScreenProps): React.ReactE
         await favorites.add(gameId);
       }
     } catch (err) {
-      // Revert exactly the affected game to its prior value — Req 8.6.
+      // Roll back the optimistic change on failure.
       setGameList((current) => revert(current, gameId, prev));
       setFavError(err as ApiError);
     } finally {

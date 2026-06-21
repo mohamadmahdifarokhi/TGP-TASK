@@ -1,26 +1,15 @@
 /**
- * CatalogScreen — the game catalog browser (CORRECT reference implementation).
+ * CatalogScreen — the game catalog browser.
  *
  * On mount it calls `GET /games` (via `games.list`) and renders the returned
- * games as a scrollable `FlatList` of `GameCard`s. The four canonical async
- * states are funneled through `StateView`:
- *   - loading   → spinner               (Req 5.3)
- *   - error     → message + Retry        (Req 5.4)
- *   - empty     → empty-state message    (Req 5.5)
- *   - data      → the FlatList           (Req 5.1, 5.2)
+ * games as a scrollable `FlatList` of `GameCard`s. The canonical async states
+ * (loading / error+retry / empty / data) are funneled through `StateView`.
  *
- * Pagination (Req 5.6): when the list reaches its end, the next page is
- * requested and appended via the pure `appendPage` pagination util. The
- * backend may return either a `Paginated<Game>` envelope or a bare `Game[]`;
- * both shapes are handled.
+ * Pagination: when the list reaches its end, the next page is requested and
+ * appended via the pure `appendPage` pagination util. The backend may return
+ * either a `Paginated<Game>` envelope or a bare `Game[]`.
  *
- * Tapping a card navigates to `GameDetail` (Req 6.1 entry point).
- *
- * IMPORTANT (the bits BUG-06 will later break): the `loading` flag is always
- * cleared in a `finally`, and list data is guarded against `undefined` by
- * defaulting to `[]`. This is the correct reference these guards rely on.
- *
- * Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 5.6
+ * Tapping a card navigates to `GameDetail`.
  */
 
 import React, { useCallback, useEffect, useState } from 'react';
@@ -33,10 +22,10 @@ import StateView from '../../components/StateView';
 import { DEFAULT_INITIAL_PAGE, DEFAULT_PAGE_SIZE } from '../../config';
 import { appendPage } from '../../utils/pagination';
 
-/** Param list fragment this screen contributes (RootNavigator is authored in 9.6). */
+/** Param list fragment this screen contributes. */
 export type CatalogScreenParams = undefined;
 
-/** Loosely-typed navigation so this screen compiles ahead of the navigator. */
+/** Loosely-typed navigation for the catalog screen. */
 type LooseNavigation = {
   navigate: (screen: string, params?: Record<string, unknown>) => void;
 };
@@ -47,8 +36,7 @@ export type CatalogScreenProps = {
 
 /**
  * Normalize a `games.list` result (which may be `Paginated<Game>` or `Game[]`)
- * into a concrete `{ items, total }` pair. `items` always defaults to `[]` so
- * downstream rendering never maps over `undefined`.
+ * into a concrete `{ items, total }` pair.
  */
 function normalizeListResult(result: Paginated<Game> | Game[]): {
   items: Game[];

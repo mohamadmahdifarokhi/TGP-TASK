@@ -1,6 +1,6 @@
 // Feature: employment-frontend, Property 9: Optimistic favorite is keyed by gameId and reverts on failure
 /**
- * Property-based test for Property 9 (Requirements 8.1, 8.6).
+ * Property-based test for Property 9.
  *
  * For ANY list of games (with unique ids and random favorite flags) and ANY
  * target gameId chosen from that list, the optimistic favorite reducer
@@ -19,7 +19,7 @@
  * Speed: iteration count is tunable via `FC_NUM_RUNS` and defaults LOW so the
  * suite stays fast; override with `FC_NUM_RUNS=200 npm test` for deeper runs.
  *
- * **Validates: Requirements 8.1, 8.6**
+ 
  */
 import fc from 'fast-check';
 

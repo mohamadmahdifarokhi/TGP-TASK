@@ -3,14 +3,13 @@
  *
  * Typed functions for the JamJoys watch-history endpoints. Calls route through
  * the shared {@link request} helper so failures surface as a structured
- * `ApiError` (Requirement 2.3) and the 401 refresh/retry interceptor applies
+ * `ApiError` and the 401 refresh/retry interceptor applies
  * uniformly. Each function returns the parsed `response.data`.
  *
- * Routes (targeted exactly as published — Requirement 2.6):
+ * Routes (targeted exactly as published
  * - `list`   → `GET  /watch-history`
  * - `record` → `POST /watch-history/:videoId`
  *
- * Requirements: 2.5, 2.6, 7.4, 7.5
  */
 
 import { request } from './client';

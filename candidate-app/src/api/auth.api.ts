@@ -4,8 +4,8 @@
  * Typed wrappers over the JamJoys backend's auth endpoints. Every screen and
  * the Auth_Store talk to auth through these functions rather than issuing
  * requests directly, so the backend contract lives in exactly one place
- * (Requirement 2.5). All requests go through the centralized {@link apiClient},
- * so the shared base URL/timeout (Requirement 2.6) and — once attached — the
+ *. All requests go through the centralized {@link apiClient},
+ * so the shared base URL/timeout and — once attached — the
  * Bearer/refresh interceptors apply uniformly.
  *
  * Each function resolves with the typed response body and, on failure, rejects
@@ -14,15 +14,14 @@
  *
  * Verified backend facts honored here:
  * - `POST /auth/send-otp` accepts `{ phoneNumber }` (`^09\d{9}$`); in non-prod
- *   the response includes the dev `otp` (Requirements 3.1).
+ *   the response includes the dev `otp`.
  * - `POST /auth/verify-otp` accepts `{ phoneNumber, otp }` and returns the user
- *   plus access + refresh tokens (Requirement 3.4).
+ *   plus access + refresh tokens.
  * - `POST /auth/refresh` accepts `{ refreshToken }` and returns ONLY
- *   `{ accessToken }` — no new refresh token (Requirements 4.4, 4.6).
+ *   `{ accessToken }` — no new refresh token.
  * - `POST /auth/logout` and `GET /auth/me` require a Bearer token; `me()` is the
- *   canonical "current user" source (Requirement 9.1).
+ *   canonical "current user" source.
  *
- * Requirements: 2.5, 2.6, 3.1, 3.4, 4.6, 9.1
  */
 
 import { request } from './client';
@@ -43,7 +42,6 @@ import type {
  * resolved {@link SendOtpRes} includes the dev `otp`, making the flow testable
  * without a real SMS gateway.
  *
- * Requirements: 3.1
  */
 export async function sendOtp(phoneNumber: string): Promise<SendOtpRes> {
   const body: SendOtpReq = { phoneNumber };
@@ -61,7 +59,6 @@ export async function sendOtp(phoneNumber: string): Promise<SendOtpRes> {
  * `POST /auth/verify-otp` with body `{ phoneNumber, otp }`. Resolves with the
  * authenticated user plus the access and refresh tokens the caller persists.
  *
- * Requirements: 3.4
  */
 export async function verifyOtp(
   phoneNumber: string,
@@ -83,7 +80,6 @@ export async function verifyOtp(
  * `{ accessToken }` (no new refresh token), so callers must keep reusing the
  * stored refresh token until it expires.
  *
- * Requirements: 4.4, 4.6
  */
 export async function refresh(refreshToken: string): Promise<RefreshRes> {
   const body: RefreshReq = { refreshToken };
@@ -100,7 +96,6 @@ export async function refresh(refreshToken: string): Promise<RefreshRes> {
  *
  * `POST /auth/logout` (requires a Bearer token). Resolves with no value.
  *
- * Requirements: 4.6
  */
 export async function logout(): Promise<void> {
   await request<void>({
@@ -115,7 +110,6 @@ export async function logout(): Promise<void> {
  * `GET /auth/me` (requires a Bearer token). This is the canonical "current
  * user" source used by the profile screen and session hydration.
  *
- * Requirements: 9.1
  */
 export async function me(): Promise<AuthUser> {
   const res = await request<AuthUser>({

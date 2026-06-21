@@ -11,7 +11,7 @@
  * This switch is the single authorization gate for the app: because the app
  * tabs are only mounted while `status === 'authenticated'`, an unauthenticated
  * session can never navigate to any protected screen — there is simply no
- * navigator route to one (Req 4.7). When the session changes (verify-otp
+ * navigator route to one. When the session changes (verify-otp
  * success, logout, or a refresh failure clearing the session) the store status
  * changes and this component swaps the mounted tree accordingly.
  */

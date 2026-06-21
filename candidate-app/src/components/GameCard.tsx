@@ -5,9 +5,9 @@
  * display fields are sourced from the pure `toDisplayGame` mapper, which derives
  * category/difficulty from the backend's configuration-object fields
  * (`categoryConfig` / `difficultyConfig`) and NEVER from the legacy
- * `category` / `difficulty` enum fields (Requirement 6.5).
+ * `category` / `difficulty` enum fields.
  *
- * The card displays at minimum the title and thumbnail (Requirement 5.2) and
+ * The card displays at minimum the title and thumbnail and
  * is wrapped in a touchable that invokes `onPress` with the original `Game`.
  */
 

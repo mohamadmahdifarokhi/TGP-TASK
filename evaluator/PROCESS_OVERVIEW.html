@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JamJoys Frontend Task — راهنمای داخلی ارزیاب</title>
+<style>
+  :root {
+    --bg: #0f1419;
+    --card: #1a2129;
+    --card2: #222b35;
+    --ink: #e6edf3;
+    --muted: #9aa7b4;
+    --accent: #4ea1ff;
+    --green: #3fb950;
+    --amber: #d29922;
+    --red: #f85149;
+    --border: #2d3742;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Vazirmatn", "Segoe UI", Tahoma, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.8;
+  }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 32px 20px 80px; }
+  header.hero {
+    background: linear-gradient(135deg, #15324f, #1a2129);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 28px 24px;
+    margin-bottom: 28px;
+  }
+  header.hero h1 { margin: 0 0 6px; font-size: 26px; }
+  header.hero p { margin: 0; color: var(--muted); }
+  .badge {
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+  }
+  section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin-bottom: 22px;
+  }
+  h2 {
+    margin: 0 0 14px;
+    font-size: 20px;
+    border-right: 4px solid var(--accent);
+    padding-right: 12px;
+  }
+  h3 { font-size: 16px; margin: 18px 0 8px; color: var(--accent); }
+  p, li { font-size: 15px; }
+  ul, ol { padding-right: 22px; margin: 8px 0; }
+  li { margin-bottom: 6px; }
+  code {
+    background: var(--card2);
+    padding: 2px 7px;
+    border-radius: 6px;
+    font-family: "JetBrains Mono", Consolas, monospace;
+    font-size: 13px;
+    direction: ltr;
+    display: inline-block;
+  }
+  pre {
+    background: #0b1016;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    direction: ltr;
+    text-align: left;
+  }
+  pre code { background: none; padding: 0; font-size: 13px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 9px 12px;
+    text-align: right;
+  }
+  th { background: var(--card2); font-weight: 700; }
+  td.num, th.num { text-align: center; width: 80px; }
+  tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+  .pill { font-size: 12px; padding: 2px 9px; border-radius: 999px; font-weight: 600; }
+  .pill.auth { background: #2d2438; color: #c9a9ff; }
+  .pill.api { background: #14322b; color: #6ee7c0; }
+  .pill.state { background: #33291a; color: #ffce85; }
+  .pill.ui { background: #1f2f44; color: #8cc0ff; }
+  .steps { counter-reset: step; list-style: none; padding: 0; }
+  .steps li {
+    position: relative;
+    padding: 12px 56px 12px 16px;
+    background: var(--card2);
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  .steps li::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    right: 14px; top: 12px;
+    width: 28px; height: 28px;
+    background: var(--accent);
+    color: #06121f;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 8px;
+  }
+  .tile {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .tile h4 { margin: 0 0 6px; font-size: 15px; color: var(--accent); }
+  .tile .pts { font-size: 22px; font-weight: 800; }
+  .note {
+    border-right: 4px solid var(--amber);
+    background: rgba(210,153,34,0.08);
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin: 14px 0;
+  }
+  .danger {
+    border-right: 4px solid var(--red);
+    background: rgba(248,81,73,0.08);
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin: 14px 0;
+  }
+  .total-row td { font-weight: 800; background: rgba(78,161,255,0.12) !important; }
+  .toc { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+  .toc a {
+    color: var(--accent);
+    text-decoration: none;
+    background: var(--card2);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    border: 1px solid var(--border);
+  }
+  .toc a:hover { background: #2a3845; }
+  footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 30px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="badge">محرمانه — فقط ارزیاب • به کاندیدا داده نشود</span>
+    <h1>تسک فرانت‌اند JamJoys — راهنمای داخلی پروسه</h1>
+    <p>یک نمای کلی از این‌که چه چیزی به فرانت می‌دهیم، انتظار چه کاری داریم، و چطور نمره می‌دهیم.</p>
+  </header>
+
+  <div class="toc">
+    <a href="#what">۱. چی می‌دیم</a>
+    <a href="#expect">۲. انتظار چیه</a>
+    <a href="#bugs">۳. باگ‌های کاشته‌شده</a>
+    <a href="#scoring">۴. نمره‌دهی</a>
+    <a href="#process">۵. پروسهٔ گرفتن نمره</a>
+    <a href="#handover">۶. تحویل امن</a>
+  </div>
+
+  <section id="what">
+    <h2>۱. چه چیزی به کاندیدا می‌دهیم؟</h2>
+    <p>کاندیدا یک پکیج (zip / ریپوی public) دریافت می‌کند که شامل پروژهٔ استارتر و مستندات تسک است. پوشهٔ <code>evaluator/</code> هرگز تحویل داده نمی‌شود.</p>
+    <table>
+      <thead><tr><th>فایل / پوشه</th><th>توضیح</th></tr></thead>
+      <tbody>
+        <tr><td><code>candidate-app/</code></td><td>اپ React Native (Expo) که سرتاسر کار می‌کند ولی ۶ باگ عمدی دارد.</td></tr>
+        <tr><td><code>ASSIGNMENT.md</code></td><td>شرح کامل تسک، استک پیشنهادی، حقایق تأییدشدهٔ بک‌اند، Git workflow و مراحل تحویل.</td></tr>
+        <tr><td><code>BUGS.md</code></td><td>فقط <strong>علائم</strong> ۶ باگ (بدون ریشه و راه‌حل).</td></tr>
+        <tr><td><code>README.md</code></td><td>قالب خالی برای کاندیدا تا پر کند (نحوهٔ اجرا، env، ساختار، نگاشت صفحه↔endpoint).</td></tr>
+        <tr><td><code>AI_USAGE.md</code></td><td>قالب مستندسازی استفاده از ابزار AI.</td></tr>
+        <tr><td><code>BUGFIX_NOTES.md</code></td><td>قالب ثبت ریشه و راه‌حل هر باگ + تفکیک AI/دستی.</td></tr>
+      </tbody>
+    </table>
+    <div class="note">بک‌اند NestJS واقعی یک <strong>وابستگی ثابت خارجی</strong> است — کاندیدا آن را تغییر نمی‌دهد، فقط کلاینت را به آن وصل می‌کند. OTP در حالت dev در پاسخ برمی‌گردد، پس کل فلو بدون SMS قابل تست است.</div>
+  </section>
+
+  <section id="expect">
+    <h2>۲. انتظار چه کاری داریم؟</h2>
+    <p>تسک برای تقریباً <strong>یک روز کاری (~۸ ساعت)</strong> طراحی شده. کاندیدا باید:</p>
+    <ul>
+      <li>اپ را روی بک‌اند واقعی به‌درستی اجرا کند (لایه‌بندی تمیز: UI → state → API client → backend).</li>
+      <li>هر ۶ باگ کاشته‌شده را پیدا و رفع کند و هر کدام را در <code>BUGFIX_NOTES.md</code> مستند کند.</li>
+      <li>فلو احراز هویت OTP، persist و refresh خودکار توکن را درست پیاده کند.</li>
+      <li>صفحات اصلی (کاتالوگ، جزئیات بازی، پخش ویدیو، علاقه‌مندی‌ها، wishlist، تاریخچه، پروفایل) را کامل کند.</li>
+      <li>حالت‌های loading / error / empty را در همهٔ صفحات داشته باشد.</li>
+      <li>هر فیکس را به‌صورت یک کامیت <code>fix:</code> مجزا با ارجاع به شناسهٔ باگ کامیت کند (Conventional Commits).</li>
+      <li>کد را روی یک ریپوی <strong>public</strong> با تاریخچهٔ کامل git پوش کند و لینکش را بدهد.</li>
+      <li>سه مستند <code>README.md</code>، <code>AI_USAGE.md</code>، <code>BUGFIX_NOTES.md</code> را پر کند.</li>
+    </ul>
+  </section>
+
+  <section id="bugs">
+    <h2>۳. باگ‌های کاشته‌شده (کلید پاسخ — محرمانه)</h2>
+    <p>۶ باگ در حوزه‌های auth، API، state و UI پخش شده‌اند. هر باگ به یک property test متصل است که با رفع باگ سبز می‌شود.</p>
+    <table>
+      <thead><tr><th>باگ</th><th>حوزه</th><th>علامت</th><th>ریشه (خلاصه)</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>BUG-01</strong></td>
+          <td><span class="pill auth">Auth</span></td>
+          <td>بعد از restart همیشه logout می‌شود.</td>
+          <td>توکن‌ها فقط in-memory نگه داشته می‌شوند؛ persist/hydrate به secure-store انجام نمی‌شود.</td>
+        </tr>
+        <tr>
+          <td><strong>BUG-02</strong></td>
+          <td><span class="pill api">API</span></td>
+          <td>صفحات محافظت‌شده همیشه 401 می‌دهند.</td>
+          <td>هدر بدون فاصله ساخته می‌شود: <code>"Bearer"+token</code>. باید <code>Bearer &lt;token&gt;</code> با یک فاصله باشد.</td>
+        </tr>
+        <tr>
+          <td><strong>BUG-03</strong></td>
+          <td><span class="pill api">API</span></td>
+          <td>بعد از ~۱۵ دقیقه به‌جای refresh، logout می‌شود.</td>
+          <td>توکن جدید روی retry اعمال نمی‌شود، یا پاسخ refresh (فقط <code>accessToken</code>) اشتباهاً ناقص فرض و session پاک می‌شود.</td>
+        </tr>
+        <tr>
+          <td><strong>BUG-04</strong></td>
+          <td><span class="pill state">State</span></td>
+          <td>favorite برمی‌گردد یا بازی اشتباه favorite می‌شود.</td>
+          <td>به‌روزرسانی optimistic با <em>index</em> کلید می‌خورد نه <code>gameId</code>، و روی خطا revert نمی‌شود.</td>
+        </tr>
+        <tr>
+          <td><strong>BUG-05</strong></td>
+          <td><span class="pill ui">UI</span></td>
+          <td>عنوان/دستهٔ بازی خالی رندر می‌شود.</td>
+          <td>mapper از فیلدهای enum قدیمی <code>category/difficulty</code> می‌خواند؛ باید از <code>categoryConfig/difficultyConfig</code> بخواند.</td>
+        </tr>
+        <tr>
+          <td><strong>BUG-06</strong></td>
+          <td><span class="pill ui">UI</span></td>
+          <td>اسپینر کاتالوگ هیچ‌وقت محو نمی‌شود / روی نتیجهٔ خالی crash می‌کند.</td>
+          <td>نبودِ <code>finally</code> برای پاک‌کردن loading + map روی دادهٔ undefined بدون گارد.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="danger">جزئیات کامل ریشه، مسیر فایل و فیکس مینیمال هر باگ در <code>evaluator/BUG_ANSWER_KEY.md</code> است. این جدول فقط خلاصه است.</div>
+  </section>
+
+  <section id="scoring">
+    <h2>۴. چطور نمره می‌دهیم؟ (۱۰۰ امتیاز)</h2>
+    <p>هر دسته مستقل و بر اساس <strong>رفتار قابل‌مشاهده</strong> نمره می‌گیرد. سه باند: امتیاز کامل / جزئی / صفر.</p>
+    <table>
+      <thead><tr><th class="num">#</th><th>دسته</th><th class="num">امتیاز</th></tr></thead>
+      <tbody>
+        <tr><td class="num">۱</td><td>راه‌اندازی و ساختار پروژه</td><td class="num">۱۰</td></tr>
+        <tr><td class="num">۲</td><td>لایهٔ API client</td><td class="num">۱۰</td></tr>
+        <tr><td class="num">۳</td><td>احراز هویت و مدیریت state</td><td class="num">۲۰</td></tr>
+        <tr><td class="num">۴</td><td>صفحات و قابلیت‌های اصلی</td><td class="num">۲۵</td></tr>
+        <tr><td class="num">۵</td><td>مدیریت error و loading</td><td class="num">۱۰</td></tr>
+        <tr><td class="num">۶</td><td>رفع باگ‌های کاشته‌شده</td><td class="num">۱۰</td></tr>
+        <tr><td class="num">۷</td><td>Git workflow</td><td class="num">۵</td></tr>
+        <tr><td class="num">۸</td><td>مستندسازی استفاده از AI</td><td class="num">۵</td></tr>
+        <tr><td class="num">۹</td><td>کیفیت README</td><td class="num">۵</td></tr>
+        <tr class="total-row"><td class="num">—</td><td>مجموع</td><td class="num">۱۰۰</td></tr>
+      </tbody>
+    </table>
+
+    <h3>نکات کلیدی نمره‌دهی</h3>
+    <ul>
+      <li><strong>قانون صفر در صورت حذف:</strong> اگر یک deliverable لازم برای یک دسته حذف شده باشد، آن دسته صفر می‌گیرد — صرف‌نظر از کیفیت بقیهٔ کار.</li>
+      <li><strong>چک‌اوت تمیز:</strong> روی یک clone تازه و طبق README خودِ کاندیدا نمره می‌دهیم؛ هیچ فایلی دستی اصلاح نمی‌کنیم. اگر طبق مستندات اجرا نشد، خودش یک سیگنال نمره است.</li>
+      <li><strong>مبتنی بر شواهد:</strong> برای هر کسر امتیاز، رفتار مشاهده‌شده (صفحه، خروجی دستور، فایل/خط) ثبت می‌شود.</li>
+      <li><strong>Property tests:</strong> چند باگ یک property را قرمز کرده‌اند؛ رفع باگ آن را سبز می‌کند (regression قابل سنجش).</li>
+      <li><strong>Stretch goals:</strong> جدا یادداشت می‌شوند و هرگز مجموع را بالای ۱۰۰ نمی‌برند.</li>
+    </ul>
+
+    <div class="grid">
+      <div class="tile"><h4>سنگین‌ترین دسته</h4><div class="pts">۲۵</div><p>صفحات و قابلیت‌های اصلی (۵ حوزه × ۵).</p></div>
+      <div class="tile"><h4>auth + state</h4><div class="pts">۲۰</div><p>OTP، persist، 401→refresh→retry یک‌بار.</p></div>
+      <div class="tile"><h4>کیفیت/مستندات</h4><div class="pts">۱۵</div><p>Git + AI usage + README روی هم.</p></div>
+    </div>
+  </section>
+
+  <section id="process">
+    <h2>۵. پروسهٔ عملی گرفتن نمره</h2>
+    <ol class="steps">
+      <li>بک‌اند JamJoys را بالا بیاور و مطمئن شو <code>POST /auth/send-otp</code> مقدار dev <code>otp</code> را برمی‌گرداند.</li>
+      <li>از سابمیشن کاندیدا یک clone تازه بگیر؛ دستور install مستندشده را اجرا کن (بدون اصلاح دستی).</li>
+      <li>اپ را روی بک‌اند اجرا کن و اسکریپت‌های <code>typecheck</code> و <code>test</code> را بگیر.</li>
+      <li>هر صفحه را به‌صورت دستی پیمایش کن و رفتار قابل‌مشاهده را با رابریک تطبیق بده.</li>
+      <li>هر باگ را با <code>BUG_ANSWER_KEY.md</code> راستی‌آزمایی کن (آیا علامت رفع شده؟ آیا property سبز شده؟).</li>
+      <li>هر دسته را مستقل نمره بده و در <code>GRADING_WORKSHEET.md</code> با شواهد ثبت کن.</li>
+      <li>مجموع را از ۱۰۰ حساب کن؛ stretch goals را جداگانه یادداشت کن.</li>
+    </ol>
+    <div class="note">برای نمره‌دهی، نسخهٔ خصوصی <code>evaluator/</code> خودت را استفاده کن. سابمیشن کاندیدا هیچ فایل evaluator ندارد، پس چیزی برای merge برگشتی وجود ندارد.</div>
+  </section>
+
+  <section id="handover">
+    <h2>۶. تحویل امن (یادآوری)</h2>
+    <p>قبل از فرستادن هر چیزی به کاندیدا، مطمئن شو پوشهٔ <code>evaluator/</code> داخلش نیست.</p>
+    <pre><code># پوشه نباید در working tree باشد
+test ! -e evaluator/ && echo "OK: absent" || echo "FAIL: present"
+
+# git نباید روی برنچ تحویل آن را track کند
+git ls-files | grep -q '^evaluator/' && echo "FAIL: tracked" || echo "OK"
+
+# هیچ ارجاع به کلید پاسخ/رابریک نباشد
+grep -rli --include='*.md' 'BUG_ANSWER_KEY\|GRADING_WORKSHEET' . && echo "FAIL" || echo "OK"</code></pre>
+    <p>جزئیات کامل در <code>HANDOVER.md</code> آمده (برنچ خصوصی <code>evaluator</code> یا حذف pre-handover روی یک کپی throwaway).</p>
+  </section>
+
+  <footer>
+    سند داخلی ارزیاب — JamJoys Frontend Task. این فایل را داخل <code>evaluator/</code> نگه دار و هرگز به کاندیدا نده.
+  </footer>
+
+</div>
+</body>
+</html>

@@ -7,12 +7,7 @@
  * {@link OtpScreen}, passing the (normalized) phone number along so OTP
  * verification targets the same number.
  *
- * Requirements honored here:
- *  - 3.1: On submit of a valid number, call `sendOtp(phoneNumber)`.
- *  - 3.2: If the number is not a valid Iranian format, show a validation
  *         message and do NOT call the backend.
- *  - 3.3: On a confirmed send, navigate to the 6-digit OTP entry screen.
- *  - 3.7: While the send request is in flight, disable the submit control to
  *         prevent duplicate submissions.
  */
 
@@ -34,7 +29,7 @@ import { isValidIranPhone, normalizeIranPhone } from '@/utils/phone';
  * Navigation param list for the auth stack.
  *
  * Defined and exported here so this screen compiles independently of the
- * navigator (authored in task 9.6). The navigator (`AuthStack`) should import
+ * navigator. The navigator (`AuthStack`) should import
  * this type rather than redeclaring it, keeping the route contract in one place.
  */
 export type AuthStackParamList = {
@@ -44,15 +39,14 @@ export type AuthStackParamList = {
   Otp: { phoneNumber: string };
 };
 
-/** User-facing validation message for a malformed phone number (Req 3.2). */
+/** User-facing validation message for a malformed phone number. */
 export const PHONE_VALIDATION_MESSAGE =
   'Please enter a valid Iranian mobile number (09xxxxxxxxx).';
 
 /**
- * Props are intentionally loosely typed (`any`) for the `navigation` object so
- * this screen does not depend on the not-yet-authored navigator. Once 9.6 wires
- * the stack, it can pass a `NativeStackScreenProps<AuthStackParamList, 'Phone'>`
- * here without changes.
+ * Props are loosely typed (`any`) for the `navigation` object. A navigator can
+ * pass a `NativeStackScreenProps<AuthStackParamList, 'Phone'>` here without
+ * changes.
  */
 export type PhoneScreenProps = {
   navigation: any;
@@ -65,7 +59,7 @@ export function PhoneScreen({ navigation }: PhoneScreenProps): React.ReactElemen
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = useCallback(async () => {
-    // Guard against duplicate submissions while a request is in flight (Req 3.7).
+    // Guard against duplicate submissions while a request is in flight.
     if (submitting) {
       return;
     }
@@ -74,7 +68,7 @@ export function PhoneScreen({ navigation }: PhoneScreenProps): React.ReactElemen
 
     // Normalize loose input (+98/0098/98 prefixes, separators) to the canonical
     // form, then validate. If the input cannot be normalized to a valid number,
-    // show a validation message and make NO backend call (Req 3.2).
+    // show a validation message and make NO backend call.
     const normalized = normalizeIranPhone(phone) ?? phone.trim();
     if (!isValidIranPhone(normalized)) {
       setValidationError(PHONE_VALIDATION_MESSAGE);
@@ -84,9 +78,9 @@ export function PhoneScreen({ navigation }: PhoneScreenProps): React.ReactElemen
     setValidationError(null);
     setSubmitting(true);
     try {
-      // Valid number → request the OTP (Req 3.1).
+      // Valid number → request the OTP.
       await sendOtp(normalized);
-      // Backend confirmed the send → advance to OTP entry (Req 3.3), carrying
+      // Backend confirmed the send → advance to OTP entry, carrying
       // the same normalized number so verify-otp targets it.
       navigation.navigate('Otp', { phoneNumber: normalized });
     } catch (err) {

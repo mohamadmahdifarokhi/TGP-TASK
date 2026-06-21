@@ -4,13 +4,13 @@
 
 JamJoys is a Persian platform that teaches traditional games through short videos. Users sign in with their Iranian phone number and a one-time password, browse a catalog of games, watch the associated videos, favorite and wishlist games, and track their watch history.
 
-Your task is to build a **fresh React Native frontend** for JamJoys that consumes the **real JamJoys NestJS backend**. The backend already exists and is a **fixed external dependency** — you do not modify it. A starter project lives in [`candidate-app/`](./candidate-app); it is intentionally incomplete and contains a set of seeded bugs you must find and fix (see [`BUGS.md`](./BUGS.md)).
+Your task is to work on a **React Native frontend** for JamJoys that consumes the **JamJoys backend API**. The backend is a **fixed external dependency** — you do not modify it; you build the client against its contract. A ready-to-run mock of that backend is bundled in [`mock-backend/`](./mock-backend) so you can run everything locally without a database (see [Running the Backend](#running-the-backend)). A working starter app lives in [`candidate-app/`](./candidate-app); it runs end-to-end but contains a set of **seeded bugs** that you must locate and fix (see [`BUGS.md`](./BUGS.md)).
 
 This is a graded take-home test. It is designed to be completable in roughly **one working day (~8 hours)** by a competent React Native developer, and it is graded objectively against observable behavior and the deliverables listed below.
 
 ## Scope
 
-Build the consumer-facing mobile app. You are expected to implement:
+The app already implements the consumer-facing screens and the supporting layers. Your job is to get it working correctly by finding and fixing the seeded bugs, and to demonstrate that you understand the codebase. The areas in play are:
 
 - **OTP authentication** — phone entry, OTP entry, token persistence, and automatic token refresh.
 - **Auth state management** — a shared store holding tokens and the current user, persisted across app restarts.
@@ -23,7 +23,7 @@ Creator/upload/admin flows are **out of scope** — this assignment is consumer-
 
 ## Time Budget
 
-Target **~8 hours**. The scope above is sized to fit. If you run short on time, prioritize: working auth + token refresh, the centralized API client, the catalog and detail screens, and clean loading/error handling. Document anything you left incomplete in your `README.md`.
+Target **~8 hours**. The scope above is sized to fit. If you run short on time, prioritize the auth + token-refresh bugs, the API client, and the catalog/detail screens. Document anything you left unfinished in your `README.md`.
 
 ## Recommended Stack (substitutions allowed)
 
@@ -74,43 +74,39 @@ The starter ships with seeded bugs spanning authentication, API integration, sta
 
 ## Git Workflow
 
+- **Host your code in a public Git repository** (e.g. GitHub, GitLab) and share the link for grading.
 - Develop features on dedicated feature branches; do not commit directly to the default branch.
-- Use [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `chore:`, `docs:`, ...).
+- Use [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `chore:`, `docs:`, ...) — proper commit hygiene is graded.
 - Keep each commit a single coherent, self-contained change.
 - Open a pull-request-style merge into the default branch with a description summarizing the change.
 - Exclude dependency directories, build artifacts, and environment secrets from all commits.
 
-## Running the JamJoys Backend
+## Running the Backend
 
-The backend lives at `/home/tgp-dev/Projects/JamJoys/backend` (NestJS + Prisma + PostgreSQL).
+A ready-to-run **mock backend** is bundled in [`mock-backend/`](./mock-backend). It is a
+zero-dependency Node server that implements the exact endpoints, request/response shapes, and
+the Verified Backend Facts above — so you can build and test the app end-to-end **without**
+setting up PostgreSQL, FFmpeg, or a real server. The backend contract is what matters here; you
+do not modify it (treat it as a fixed external dependency).
 
-**Prerequisites:** Node.js 18+, PostgreSQL 14+, FFmpeg, npm.
+**Prerequisites:** Node.js 18+ (no `npm install` needed for the mock — it uses only Node's
+built-in modules).
 
 ```bash
-cd /home/tgp-dev/Projects/JamJoys/backend
+cd mock-backend
 
-# 1. Install dependencies
-npm install
+# Start the server (listens on http://localhost:3000)
+node server.js
 
-# 2. Configure environment
-cp .env.example .env
-# edit .env: set DATABASE_URL and JWT secrets
-
-# 3. Run database migrations
-npx prisma migrate dev
-
-# 4. Seed sample data (recommended so the catalog has content)
-npm run seed
-
-# 5. Start the dev server
-npm run start:dev
+# Optional: use a short access-token TTL to exercise the 401 -> refresh -> retry flow
+ACCESS_TOKEN_TTL=20 node server.js
 ```
 
 Once running:
 
 - API base URL: `http://localhost:3000`
-- API docs (Swagger): `http://localhost:3000/api/docs`
-- Inspect the database: `npx prisma studio`
+- Health check: `GET http://localhost:3000/health`
+- Full endpoint list and seed data: [`mock-backend/README.md`](./mock-backend/README.md)
 
 Point your app at the backend by setting `EXPO_PUBLIC_API_BASE_URL` in `candidate-app/.env` (see `candidate-app/.env.example`). When testing on a physical device, use your machine's LAN IP instead of `localhost`.
 
@@ -123,4 +119,4 @@ Point your app at the backend by setting `EXPO_PUBLIC_API_BASE_URL` in `candidat
 3. Ensure a clean checkout installs and runs by following your own `README.md`.
 4. Commit your work on feature branches with Conventional Commits, and open PR-style merges into the default branch.
 5. Confirm `.gitignore` excludes `node_modules`, build artifacts, and `.env`.
-6. Push your repository (with full git history) and share access for grading.
+6. Push your code to a **public Git repository** (with full git history) and share the repository link for grading.

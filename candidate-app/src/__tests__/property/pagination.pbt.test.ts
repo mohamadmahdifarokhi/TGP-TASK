@@ -18,7 +18,7 @@
  * BUG-06 affects the catalog screen's pagination behavior, but this pure util
  * stays correct; the property is linked to that requirement.
  *
- * **Validates: Requirements 5.6**
+ 
  */
 import fc from 'fast-check';
 

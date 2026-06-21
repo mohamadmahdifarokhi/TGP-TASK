@@ -7,7 +7,7 @@
  * Auth_Store on a fresh launch (hydrate) yields identical tokens and user and a
  * status of 'authenticated'.
  *
- * Validates: Requirements 4.2, 4.3
+ * 
  *
  * expo-secure-store is mocked in jest.setup.js with an in-memory Map that
  * persists across calls within a single test (the beforeEach reset only fires

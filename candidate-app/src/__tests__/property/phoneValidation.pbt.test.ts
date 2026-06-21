@@ -1,6 +1,6 @@
 // Feature: employment-frontend, Property 3: Phone validation gates the backend call
 /**
- * Property-based test for Property 3 (Requirements 3.2).
+ * Property-based test for Property 3.
  *
  * For ANY input string, the sign-in flow calls `send-otp` IF AND ONLY IF the
  * string matches the canonical Iranian mobile format (`^09\d{9}$`); for every
@@ -17,7 +17,7 @@
  * (b) arbitrary strings (mostly invalid), so BOTH branches of the gate — call
  * vs. no call — are exercised across runs.
  *
- * **Validates: Requirements 3.2**
+ 
  */
 import fc from 'fast-check';
 

@@ -2,9 +2,9 @@
  * Example/edge reference tests for PhoneScreen (SUPPLEMENTARY).
  *
  * Mocks the auth resource module so the screen never hits the network.
- *  - happy: a valid number submit calls `sendOtp` and navigates to Otp (Req 3.1, 3.3)
- *  - edge: an invalid number shows a validation message and makes NO call (Req 3.2)
- *  - edge: a send failure surfaces an error message (Req 2.4 / error handling)
+ *  - happy: a valid number submit calls `sendOtp` and navigates to Otp
+ *  - edge: an invalid number shows a validation message and makes NO call
+ *  - edge: a send failure surfaces an error message
  *
  * Requirements: 3.1, 3.3
  */

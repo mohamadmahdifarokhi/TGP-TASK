@@ -22,7 +22,7 @@
  * Speed: iteration count is tunable via `FC_NUM_RUNS` and defaults LOW so the
  * suite stays fast; override with `FC_NUM_RUNS=200 npm test` for deeper runs.
  *
- * **Validates: Requirements 2.2**
+ 
  */
 import fc from 'fast-check';
 import {

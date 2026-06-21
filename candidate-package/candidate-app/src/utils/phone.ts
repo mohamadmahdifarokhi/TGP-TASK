@@ -1,9 +1,8 @@
 /**
  * Iranian mobile phone validation and normalization utilities.
  *
- * These are PURE functions (no side effects, no I/O) so they can be exercised
- * directly by property-based tests (see Property 3 in the design) and reused by
- * the sign-in flow to gate the `POST /auth/send-otp` backend call.
+ * These are pure functions (no side effects, no I/O) used by the sign-in flow
+ * to gate the `POST /auth/send-otp` backend call.
  *
  * Canonical form accepted by the backend: `^09\d{9}$` (e.g. `09123456789`).
  */

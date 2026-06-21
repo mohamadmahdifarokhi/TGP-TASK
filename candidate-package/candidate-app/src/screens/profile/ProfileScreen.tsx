@@ -3,25 +3,24 @@
  *
  * Wiring (per the screen-to-endpoint map):
  *  - On open, loads the current user via `auth.me()` (`GET /auth/me`) — the
- *    canonical "current user" source — and shows the profile (Requirement 9.1).
+ *    canonical "current user" source — and shows the profile.
  *  - On open, loads the token balance via `users.tokenBalance()`
- *    (`GET /users/me/token-balance`) and displays it (Requirement 9.3).
+ *    (`GET /users/me/token-balance`) and displays it.
  *  - Profile edits are saved via `users.updateMe(patch)` (`PATCH /users/me`)
  *    and the screen reflects the updated values returned on success
- *    (Requirement 9.2).
+ *.
  *  - On a read or update failure the screen surfaces a human-readable error and
- *    retains the last-known values rather than blanking them (Requirement 9.4).
+ *    retains the last-known values rather than blanking them.
  *  - A Logout control calls `auth.logout()` (`POST /auth/logout`) and then
  *    `useAuthStore.getState().clearSession()` to drop every persisted credential
- *    and return the session to `unauthenticated` (Requirement 4.6).
+ *    and return the session to `unauthenticated`.
  *
  * Loading / error states are funneled through the shared {@link StateView} so
- * the screen renders consistently with the rest of the app (Requirement 9.4).
+ * the screen renders consistently with the rest of the app.
  *
- * Navigation is typed loosely on purpose — the navigator (task 9.6) is authored
- * separately and owns the concrete param/route types.
+ * Navigation is typed loosely on purpose — the navigator owns the concrete
+ * param/route types.
  *
- * Requirements: 9.1, 9.2, 9.3, 9.4, 4.6
  */
 
 import React, { useCallback, useEffect, useState } from 'react';
@@ -62,7 +61,7 @@ export type ProfileScreenProps = {
 };
 
 export function ProfileScreen(_props: ProfileScreenProps): React.ReactElement {
-  // Last-known good values. These are retained on failure (Req 9.4).
+  // Last-known good values. These are retained on failure.
   const [user, setUser] = useState<AuthUser | null>(null);
   const [balance, setBalance] = useState<number | null>(null);
 
@@ -93,7 +92,7 @@ export function ProfileScreen(_props: ProfileScreenProps): React.ReactElement {
       setUser(me);
       setAvatarDraft(me.avatar ?? '');
     } catch (err) {
-      // Retain last-known user; surface the error (Req 9.4).
+      // Retain last-known user; surface the error.
       setLoadError(toApiError(err));
       setLoading(false);
       return;
@@ -116,8 +115,8 @@ export function ProfileScreen(_props: ProfileScreenProps): React.ReactElement {
 
   /**
    * Save profile edits via `PATCH /users/me`, reflecting the returned values on
-   * success (Req 9.2). On failure, retain the last-known values and show an
-   * error (Req 9.4).
+   * success. On failure, retain the last-known values and show an
+   * error.
    */
   const handleSave = useCallback(async () => {
     if (saving) {
@@ -136,7 +135,7 @@ export function ProfileScreen(_props: ProfileScreenProps): React.ReactElement {
       setAvatarDraft(updated.avatar ?? '');
       setSaveMessage('Profile updated');
     } catch (err) {
-      // Retain last-known values; only report the error (Req 9.4).
+      // Retain last-known values; only report the error.
       setSaveError(toApiError(err));
     } finally {
       setSaving(false);
@@ -146,7 +145,7 @@ export function ProfileScreen(_props: ProfileScreenProps): React.ReactElement {
   /**
    * Logout: invalidate server-side, then clear the local session. Even if the
    * server call fails we still clear local credentials so the user is not stuck
-   * in a half-authenticated state (Req 4.6).
+   * in a half-authenticated state.
    */
   const handleLogout = useCallback(async () => {
     if (loggingOut) {

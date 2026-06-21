@@ -1,6 +1,6 @@
 // Feature: employment-frontend, Property 8: Video playback is gated strictly by access
 /**
- * Property-based test for Property 8 (Requirements 7.2, 7.3).
+ * Property-based test for Property 8.
  *
  * For ANY `validate-access` response `{ hasAccess, message }`, playback begins
  * IF AND ONLY IF `hasAccess === true`. When `hasAccess` is false the player
@@ -12,7 +12,7 @@
  * the playback decision across arbitrary booleans and arbitrary messages with
  * no I/O mocking required.
  *
- * **Validates: Requirements 7.2, 7.3**
+ 
  */
 import fc from 'fast-check';
 

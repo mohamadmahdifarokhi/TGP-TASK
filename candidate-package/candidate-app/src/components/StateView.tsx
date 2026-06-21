@@ -4,17 +4,17 @@
  *
  * Every content screen funnels its async lifecycle through this component so
  * loading / error / empty handling is consistent across the app
- * (Requirements 5.3, 5.4, 5.5, 10.1, 10.2, 10.3, 10.4).
+ *.
  *
  * State precedence (first match wins):
- *   1. `loading`  -> spinner (Req 5.3, 10.1)
- *   2. `error`    -> human-readable message + Retry control (Req 5.4, 10.2)
- *   3. `isEmpty`  -> empty-state message (Req 5.5, 10.3)
+ *   1. `loading`  -> spinner
+ *   2. `error`    -> human-readable message + Retry control
+ *   3. `isEmpty`  -> empty-state message
  *   4. otherwise  -> `children` (the data state)
  *
  * The error branch is backed by {@link getErrorMessage}, which guarantees a
  * NON-EMPTY, human-readable string for any `ApiError` — even one with a blank
- * or missing `message` (Property 10).
+ * or missing `message`.
  */
 
 import React from 'react';
@@ -38,7 +38,7 @@ export const DEFAULT_EMPTY_MESSAGE = 'Nothing to show yet';
  * Derive a guaranteed non-empty, human-readable message from an `ApiError`.
  *
  * This is a pure helper (no I/O, no side effects) so it can be exercised
- * directly and exhaustively by the Property 10 test. It NEVER returns an empty
+ * directly and exhaustively by tests. It NEVER returns an empty
  * or whitespace-only string:
  *   - When `error.message` has meaningful (non-blank) text, that text is used.
  *   - Otherwise it falls back to {@link DEFAULT_ERROR_MESSAGE}, optionally

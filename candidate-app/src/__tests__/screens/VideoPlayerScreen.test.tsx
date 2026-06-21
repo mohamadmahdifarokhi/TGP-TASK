@@ -3,10 +3,10 @@
  *
  * Mocks the videos + watch-history resource modules so the screen never hits
  * the network.
- *  - happy: loads the video on mount and renders the player (Req 7.1)
+ *  - happy: loads the video on mount and renders the player
  *  - access-denied: `validate-access` hasAccess=false shows the blocked message
- *    instead of a play control (Req 7.3)
- *  - error: a rejected load surfaces the error state (no hang) (Req 2.4)
+ *    instead of a play control
+ *  - error: a rejected load surfaces the error state (no hang)
  *
  * Requirements: 7.1, 7.3, 2.4
  */
@@ -69,7 +69,7 @@ describe('VideoPlayerScreen (example/edge reference tests)', () => {
     expect(queryByTestId('video-player-play')).toBeNull();
   });
 
-  it('surfaces a load failure as the error state without hanging (Req 2.4)', async () => {
+  it('surfaces a load failure as the error state without hanging', async () => {
     const apiError: ApiError = { status: 0, message: 'Request timed out' };
     mockedGet.mockRejectedValueOnce(apiError);
     mockedValidate.mockRejectedValueOnce(apiError);

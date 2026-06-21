@@ -1,6 +1,6 @@
 // Feature: employment-frontend, Property 5: A single 401 triggers exactly one refresh and one retry with the new token
 /**
- * Property 5 — refresh-and-retry sequencing (Validates: Requirements 4.4, 4.5).
+ * Property 5 — refresh-and-retry sequencing (
  *
  * Implementation under test: the request/response interceptors registered on
  * `apiClient` in `src/api/client.ts`. The refresh itself is issued with a *bare*
@@ -120,7 +120,7 @@ describe('Property 5: single 401 -> exactly one refresh + one retry with the new
   });
 
   // Feature: employment-frontend, Property 5: A single 401 triggers exactly one refresh and one retry with the new token
-  // Validates: Requirements 4.4, 4.5
+  // 
   it('refreshes once and retries once with the NEW token on success; clears session without looping on refresh failure', async () => {
     await fc.assert(
       fc.asyncProperty(

@@ -4,7 +4,7 @@
  * The backend `GET /videos/:id/validate-access` endpoint returns
  * `{ hasAccess: boolean, message: string }`. Playback may begin **if and only
  * if** `hasAccess` is true; when access is denied the explanatory `message`
- * is surfaced to the user instead (Requirements 7.2, 7.3 — backs Property 8).
+ * is surfaced to the user instead.
  *
  * These helpers are intentionally pure (no I/O, no side effects) so the
  * playback decision can be tested exhaustively across all inputs.

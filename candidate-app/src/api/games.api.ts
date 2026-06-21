@@ -3,17 +3,16 @@
  *
  * Typed functions for the JamJoys games endpoints. Every call goes through the
  * shared {@link request} helper so failures surface as a structured `ApiError`
- * (Requirement 2.3) and the 401 refresh/retry interceptor applies uniformly.
+ * and the 401 refresh/retry interceptor applies uniformly.
  * Each function returns the parsed `response.data`.
  *
- * Routes (targeted exactly as published — Requirement 2.6):
+ * Routes (targeted exactly as published
  * - `list`           → `GET  /games`
  * - `featured`       → `GET  /games/featured`
  * - `getBySlugOrId`  → `GET  /games/:slugOrId`
  * - `recordView`     → `POST /games/:id/view`  (UUID id only — the backend route
  *                       uses `ParseUUIDPipe` + `OptionalJwtAuthGuard`)
  *
- * Requirements: 2.5, 2.6, 5.1, 6.1, 6.3
  */
 
 import { request } from './client';

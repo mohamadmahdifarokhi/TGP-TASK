@@ -2,12 +2,7 @@
  * Pure game display mapper.
  *
  * Derives the human-readable category and difficulty values that the UI shows
- * from the backend's configuration-object fields (`categoryConfig` /
- * `difficultyConfig`) ONLY. It never reads the legacy `category` / `difficulty`
- * enum fields (Requirement 6.5).
- *
- * This is the correct reference implementation backing Property 7:
- *   "Game display reads configuration fields, not legacy enums".
+ * for a game.
  */
 
 import type { Game } from '../api/types';
@@ -17,19 +12,16 @@ export type DisplayGame = {
   id: string;
   title: string;
   thumbnail: string | null;
-  /** Derived from `categoryConfig`; '' when absent or unreadable. */
   category: string;
-  /** Derived from `difficultyConfig`; '' when absent or unreadable. */
   difficulty: string;
 };
 
 /**
  * Extract a human-readable label from a configuration object.
  *
- * Config objects are loosely typed (`Record<string, unknown>`), so we read the
- * first present, string-valued display field among `name` / `label` / `title`.
- * Returns '' when the config is missing or has no usable display field — never
- * falling back to a legacy enum field.
+ * Reads the first present, string-valued display field among
+ * `name` / `label` / `title`. Returns '' when the config is missing or has no
+ * usable display field.
  */
 function readConfigLabel(config: Record<string, unknown> | undefined): string {
   if (!config || typeof config !== 'object') {
@@ -49,8 +41,7 @@ function readConfigLabel(config: Record<string, unknown> | undefined): string {
 /**
  * Map a backend `Game` into a display-ready `DisplayGame`.
  *
- * Pure function: no I/O, no mutation of the input. Category and difficulty are
- * derived strictly from `categoryConfig` / `difficultyConfig`.
+ * Pure function: no I/O, no mutation of the input.
  */
 export function toDisplayGame(game: Game): DisplayGame {
   return {

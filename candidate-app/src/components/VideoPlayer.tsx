@@ -3,7 +3,7 @@
  *
  * Renders the player surface for a {@link Video} and exposes a **play gate**
  * wired to the pure access-gate logic in `src/utils/videoAccess.ts`
- * (Requirements 7.1, 7.2, 7.3 — backs Property 8).
+ *.
  *
  * Access semantics:
  *   - When an `access` response is provided and `accessGate` reports

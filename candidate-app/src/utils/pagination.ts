@@ -3,14 +3,9 @@
  *
  * As the user scrolls a list (e.g. the game catalog), the app fetches
  * additional pages and appends them to what it has already loaded. These
- * helpers keep that accumulation logic pure and side-effect free so it can be
- * unit- and property-tested independently of any network or UI code.
- *
- * Backs Property 6: "Pagination append preserves order and contents" —
- * loading pages sequentially yields a combined list equal to the in-order
- * concatenation of those pages, with no dropped or duplicated items.
- *
- * Related requirement: 5.6.
+ * helpers keep that accumulation logic pure and side-effect free: loading pages
+ * sequentially yields a combined list equal to the in-order concatenation of
+ * those pages, with no dropped or duplicated items.
  */
 
 import type { Paginated } from '../api/types';

@@ -8,11 +8,6 @@
  * switch to the app. On rejection (invalid/expired) an error is shown and the
  * user can re-enter the code.
  *
- * Requirements honored here:
- *  - 3.4: On submit of a 6-digit code, call `verifyOtp(phoneNumber, otp)`.
- *  - 3.5: On success, persist tokens + user via `useAuthStore.setSession(...)`.
- *  - 3.6: On invalid/expired OTP, show an error and allow re-entry.
- *  - 3.7: While the verify request is in flight, disable the submit control.
  */
 
 import React, { useCallback, useMemo, useState } from 'react';
@@ -36,10 +31,9 @@ import type { AuthStackParamList } from './PhoneScreen';
 export type { AuthStackParamList } from './PhoneScreen';
 
 /**
- * Loosely-typed props so this screen compiles independently of the navigator
- * (authored in task 9.6). `route.params.phoneNumber` is supplied by
- * {@link PhoneScreen} when it navigates here. Once 9.6 wires the stack it can
- * pass `NativeStackScreenProps<AuthStackParamList, 'Otp'>` without changes.
+ * Loosely-typed props. `route.params.phoneNumber` is supplied by
+ * {@link PhoneScreen} when it navigates here. A navigator can pass
+ * `NativeStackScreenProps<AuthStackParamList, 'Otp'>` without changes.
  */
 export type OtpScreenProps = {
   navigation: any;
@@ -64,12 +58,12 @@ export function OtpScreen({ route }: OtpScreenProps): React.ReactElement {
 
   const handleChange = useCallback((next: string) => {
     setOtp(sanitizeOtp(next));
-    // Clear a stale error as the user re-enters the code (Req 3.6).
+    // Clear a stale error as the user re-enters the code.
     setError(null);
   }, []);
 
   const handleSubmit = useCallback(async () => {
-    // Guard against duplicate submissions while a request is in flight (Req 3.7).
+    // Guard against duplicate submissions while a request is in flight.
     if (submitting) {
       return;
     }
@@ -81,19 +75,19 @@ export function OtpScreen({ route }: OtpScreenProps): React.ReactElement {
     setError(null);
     setSubmitting(true);
     try {
-      // Verify the code for the phone number passed from PhoneScreen (Req 3.4).
+      // Verify the code for the phone number passed from PhoneScreen.
       const result = await verifyOtp(phoneNumber, otp);
-      // Persist tokens + user; this marks the session authenticated (Req 3.5).
+      // Persist tokens + user; this marks the session authenticated.
       await setSession({
         accessToken: result.accessToken,
         refreshToken: result.refreshToken,
         user: result.user,
       });
       // No explicit navigation: the root navigator switches stacks on the
-      // Auth_Store status change to `authenticated` (Req 4.7, wired in 9.6).
+      // Auth_Store status change to `authenticated`.
     } catch (err) {
       // Invalid/expired (or any failure): show the message and keep the screen
-      // so the user can re-enter the code (Req 3.6).
+      // so the user can re-enter the code.
       const apiError = err as ApiError;
       setError(
         typeof apiError?.message === 'string' && apiError.message.trim().length > 0

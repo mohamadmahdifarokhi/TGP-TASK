@@ -5,24 +5,23 @@
  * watch progress periodically while the video plays.
  *
  * On mount it issues two requests in parallel:
- *   - `GET /videos/:id`                  → video metadata (Requirement 7.1)
- *   - `GET /videos/:id/validate-access`  → `{ hasAccess, message }` (Requirement 7.2)
+ *   - `GET /videos/:id`                  → video metadata
+ *   - `GET /videos/:id/validate-access`  → `{ hasAccess, message }`
  *
  * Playback is gated by the pure access-gate logic (`accessGate`) wired through
  * the {@link VideoPlayer} component: when `hasAccess` is false the player shows
- * the backend-provided explanatory message and never starts (Requirement 7.3).
+ * the backend-provided explanatory message and never starts.
  *
  * While the video is playing, the screen posts playback progress to
  * `POST /watch-history/:videoId` on a fixed interval
  * ({@link WATCH_PROGRESS_INTERVAL_MS}) and clears that interval on unmount so no
- * timer leaks past the screen's lifetime (Requirement 7.4).
+ * timer leaks past the screen's lifetime.
  *
  * Loading and error states funnel through the shared {@link StateView}.
  *
- * Navigation is authored separately (task 9.6), so the route/navigation props
- * are typed loosely here; the screen only reads the `videoId` from route params.
+ * Navigation props are typed loosely here; the screen only reads the `videoId`
+ * from route params.
  *
- * Requirements: 7.1, 7.2, 7.3, 7.4
  */
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -37,8 +36,8 @@ import { WATCH_PROGRESS_INTERVAL_MS } from '../../config';
 import { accessGate } from '../../utils/videoAccess';
 
 /**
- * Loosely-typed navigation props. The real param/navigation types are provided
- * by `RootNavigator` (task 9.6); here we only depend on `route.params.videoId`.
+ * Loosely-typed navigation props. The screen only depends on
+ * `route.params.videoId`.
  */
 export type VideoPlayerScreenProps = {
   route?: { params?: { videoId?: string; id?: string } };
@@ -104,7 +103,7 @@ export function VideoPlayerScreen(props: VideoPlayerScreenProps): React.ReactEle
   /**
    * Begin periodic progress recording once playback starts. Guards against
    * starting more than one interval. The progress posts are fire-and-forget;
-   * a failed post must not crash the screen (Requirement 10.4).
+   * a failed post must not crash the screen.
    */
   const startRecording = useCallback(() => {
     if (!videoId || intervalRef.current !== null) {

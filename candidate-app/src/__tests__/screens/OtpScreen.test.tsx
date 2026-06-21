@@ -2,8 +2,8 @@
  * Example/edge reference tests for OtpScreen (SUPPLEMENTARY).
  *
  * Mocks the auth resource module so the screen never hits the network.
- *  - happy: a 6-digit submit calls `verifyOtp` and persists the session (Req 3.4)
- *  - edge: an invalid/expired OTP shows an error and allows re-entry (Req 3.6)
+ *  - happy: a 6-digit submit calls `verifyOtp` and persists the session
+ *  - edge: an invalid/expired OTP shows an error and allows re-entry
  *
  * Requirements: 3.6
  */

@@ -6,18 +6,13 @@
  * lifecycle is funnelled through the shared {@link StateView} so loading /
  * error+retry / empty handling is consistent with the rest of the app.
  *
- * Requirements honored here:
- *  - 7.5: On open, call `GET /watch-history` and display the previously watched
  *         videos.
- *  - 10.1: Show a loading indicator while the request is in flight.
- *  - 10.2: Show a human-readable error message (with retry) on failure.
- *  - 10.3: Show an empty-state message when zero items are returned.
  *
  * Implementation notes:
  *  - Watch-history items are NOT games, so they render as a lightweight row
  *    (title + progress) rather than via `GameCard`.
  *  - `loading` is always cleared in a `finally` so the spinner can never get
- *    stuck (mirrors the BUG-06 guard).
+ *    stuck if a request fails.
  *  - The list data is guarded against `undefined` (defaults to `[]`) so an
  *    empty/absent response renders the empty state rather than crashing.
  */
@@ -37,7 +32,7 @@ import { watchHistoryApi } from '@/api/watchHistory.api';
 
 /**
  * Loosely typed navigation prop so this screen compiles independently of the
- * navigator (authored in task 9.6).
+ * navigator.
  */
 export type WatchHistoryScreenProps = {
   navigation: any;
@@ -73,7 +68,7 @@ export function WatchHistoryScreen({
     setError(null);
     try {
       const result = await watchHistoryApi.list();
-      // Guard against an undefined/absent response body (Req 10.3 / BUG-06).
+      // Guard against an undefined/absent response body.
       setItems(Array.isArray(result) ? result : []);
     } catch (err) {
       setError(err as ApiError);
@@ -89,7 +84,7 @@ export function WatchHistoryScreen({
 
   const handlePress = useCallback(
     (item: WatchHistoryItem) => {
-      // Navigation is wired in 9.6; guard so the screen works standalone too.
+      // Guard so the screen works standalone too.
       navigation?.navigate?.('VideoPlayer', { id: item.videoId });
     },
     [navigation]

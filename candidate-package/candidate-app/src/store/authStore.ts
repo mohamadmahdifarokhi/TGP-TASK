@@ -6,21 +6,8 @@
  * the navigator switches on (`unknown` while we have not yet hydrated,
  * `authenticated` once a valid session exists, `unauthenticated` otherwise).
  *
- * Persistence (Requirement 4.2, 4.3): tokens and the user are written to
- * `expo-secure-store` whenever the session is set or the access token is
- * refreshed, and read back on launch via {@link hydrate} so the session
- * survives an application restart.
- *
- * Token lifecycle notes the store encodes:
- *  - {@link setSession} is called after a successful `verify-otp` and persists
- *    the access token, refresh token, and user together (Requirement 3.5, 4.2).
- *  - {@link setAccessToken} is called by the API client's refresh flow. The
- *    backend's `POST /auth/refresh` returns ONLY a new access token — the
- *    refresh token is REUSED, not replaced — so this action updates and
- *    persists the access token alone (Requirement 4.4).
- *  - {@link clearSession} is called on logout and on refresh failure; it deletes
- *    every persisted credential and marks the session unauthenticated
- *    (Requirement 4.5, 4.6).
+ * The session is intended to survive an application restart: tokens are written
+ * to `expo-secure-store` and read back on launch via {@link hydrate}.
  *
  * IMPORTANT (architecture): this module must NOT import the API client. The
  * dependency direction is one-directional — the API client reads from and
@@ -58,8 +45,8 @@ export type SetSessionArgs = {
 /** Imperative actions exposed by the Auth_Store. */
 export type AuthActions = {
   /**
-   * Persist a freshly issued session (access token, refresh token, user) to
-   * secure storage and mark the store `authenticated`. Used after verify-otp.
+   * Establish a freshly issued session (access token, refresh token, user) and
+   * mark the store `authenticated`. Used after verify-otp.
    */
   setSession: (args: SetSessionArgs) => Promise<void>;
   /**

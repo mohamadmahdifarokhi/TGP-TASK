@@ -1,6 +1,6 @@
 // Feature: employment-frontend, Property 10: Error view always renders a human-readable message
 /**
- * Property-based test for Property 10 (Requirement 10.2).
+ * Property-based test for Property 10.
  *
  * For ANY `ApiError { status, message }`, the shared error state view must
  * render a NON-EMPTY, human-readable message reflecting the error — never a
@@ -16,7 +16,7 @@
  * @testing-library/react-native to confirm the message actually reaches the
  * DOM as a non-empty text node (queried by testID `state-view-error-message`).
  *
- * **Validates: Requirements 10.2**
+ 
  */
 import React from 'react';
 import { render } from '@testing-library/react-native';

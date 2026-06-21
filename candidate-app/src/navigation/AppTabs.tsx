@@ -4,7 +4,7 @@
  * A bottom-tab navigator that is only ever mounted by {@link RootNavigator}
  * while the session is `authenticated`. Because the entire tab tree lives
  * behind that status check, none of these screens is reachable from an
- * unauthenticated session (Req 4.7).
+ * unauthenticated session.
  *
  * Tabs:
  *   - `CatalogTab`   → a native-stack so the catalog can push the game detail
