@@ -1,8 +1,8 @@
 /**
  * App — the application entry point.
  *
- * Expo loads `node_modules/expo/AppEntry.js`, which imports the default export
- * of this module and registers it as the root component. This file wires the
+ * Expo loads `index.ts`, which calls `registerRootComponent(App)` to register
+ * this module's default export as the root component. This file wires the
  * app together so it boots on a clean checkout:
  *
  *   - It mounts the shared providers (SafeAreaProvider) the navigation tree and
